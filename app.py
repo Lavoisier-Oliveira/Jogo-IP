@@ -4,11 +4,11 @@ from entities.tank import Tank
 
 # PyGame Setup
 pygame.init()
-screen = pygame.display.set_mode((WIDTH, HEIGHT))
+screen = pygame.display.set_mode(TAM)
 pygame.display.set_caption(CAPTION)
 clock = pygame.time.Clock()
 
-tank = Tank('B', 2)
+tank = Tank('D', 3)
 
 while True:
 	# Poll for events
