@@ -19,7 +19,7 @@ while True:
 			sys.exit()
 
 	# Atualizar o estado do tanque
-	tank.update()
+	tank.update() 
 
 	# Renderizar o jogo
 	screen.fill((0, 0, 0))  # Preencher a tela com uma cor (preto)
@@ -28,3 +28,5 @@ while True:
 	# Flip the display to put your work on screen
 	pygame.display.flip()
 	clock.tick(FPS)
+
+###	screen.pygame.image.load(f"assets/backgrounds/back1.jpg")  # Preencher a tela com uma cor (preto)
