@@ -1,5 +1,8 @@
 import pygame
 
+pygame.init()
+monitor = pygame.display.Info()
+
 
 class Tank:
 
@@ -8,7 +11,8 @@ class Tank:
 
     def __init__(self, color: str, model: int, initial_pos: list, size: int, speed: int):
         self.image = pygame.image.load(f"assets/Hulls_Color_{color}/Hull_0{model}.png")  # Carrega a imagem do tanque
-        self.image = pygame.transform.scale(self.image, (size, size)).convert_alpha()  # Redimensiona a imagem do tanque e tranforma num formato mais versatil para o pygame operar
+        self.size = size
+        self.image = pygame.transform.scale(self.image, (self.size, self.size)).convert_alpha()  # Redimensiona a imagem do tanque e tranforma num formato mais versatil para o pygame operar
         self.current_pos = initial_pos  # Posição do tanque
         self.original_image = self.image.copy()  # Guarda a imagem original para futuras rotações
         self.rect = self.image.get_rect(center=self.current_pos)
@@ -65,8 +69,11 @@ class Tank:
             center=self.rect.center)  # Atualiza o retângulo da imagem com o centro preservado
 
     def move(self):
-        self.current_pos[0] += self.vx
-        self.current_pos[1] += self.vy
+
+        if 0 <= self.current_pos[0]-self.size/2+self.vx and self.current_pos[0]+self.size/2+self.vx <= monitor.current_w:  # (movimento x não atravessa esquerda) e (movimento x não atravessa direita)
+            self.current_pos[0] += self.vx
+        if 0 <= self.current_pos[1]-self.size/2+self.vy and self.current_pos[1]+self.size/2+self.vy <= monitor.current_h:  # (movimento y não atravessa teto) e (movimento y não atravessa chão)
+            self.current_pos[1] += self.vy
         self.rect.center = self.current_pos  # Atualiza a posição do retângulo com a nova posição
 
     def update(self):

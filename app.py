@@ -10,7 +10,7 @@ screen = pygame.display.set_mode((monitor.current_w, monitor.current_h))
 pygame.display.set_caption(CAPTION)
 clock = pygame.time.Clock()
 
-tank = Tank('B', 2, [100, 100], 50, 4)
+tank = Tank('B', 2, [100, 100], 50, 10)
 
 while True:
 	# Poll for events
