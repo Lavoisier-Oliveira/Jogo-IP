@@ -3,7 +3,6 @@ import pygame
 pygame.init()
 monitor = pygame.display.Info()
 
-
 class Tank:
 
     tanks = []
