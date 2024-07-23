@@ -6,10 +6,13 @@ monitor = pygame.display.Info()
 
 class Tank:
 
+    tanks = []
+
     angle = 0  # Armazena o ângulo atual # talvez seja possível armar uma equação que, baseado na posição inicial do tanque, forneça o angulo inicial tal que este aponte para o centro da tela - seria preciso passar as dimensoes da tela para o construtor e importar uma função trigonometrica para tranformar os catetos em angulo # dessa forma o angulo seria atribuido no construtor
     vx, vy = 0, 0
 
-    def __init__(self, color: str, model: int, initial_pos: list, size: int, speed: int):
+    def __init__(self, color: str, model: int, initial_pos: list, size: int, speed: int, keys: tuple):
+        self.keys = keys  # pass pygame.K_x in the order: left, up, down, right
         self.image = pygame.image.load(f"assets/Hulls_Color_{color}/Hull_0{model}.png")  # Carrega a imagem do tanque
         self.size = size
         self.image = pygame.transform.scale(self.image, (self.size, self.size)).convert_alpha()  # Redimensiona a imagem do tanque e tranforma num formato mais versatil para o pygame operar
@@ -17,26 +20,27 @@ class Tank:
         self.original_image = self.image.copy()  # Guarda a imagem original para futuras rotações
         self.rect = self.image.get_rect(center=self.current_pos)
         self.speed = speed  # pixels percorridos por tick
+        Tank.tanks.append(self)
 
     def read_input(self):
 
         self.vx = self.vy = 0  # current vx and vy are still holding the values from previous read
 
         keys = pygame.key.get_pressed()
-        a, w, s, d = keys[pygame.K_a], keys[pygame.K_w], keys[pygame.K_s], keys[pygame.K_d]
+        left_key, up_key, down_key, right_key = keys[self.keys[0]], keys[self.keys[1]], keys[self.keys[2]], keys[self.keys[3]]
 
         # x axis
-        if a and not d:
+        if left_key and not right_key:
             self.vx = -self.speed
-        elif d and not a:
+        elif right_key and not left_key:
             self.vx = self.speed
         # y axis
-        if w and not s:
+        if up_key and not down_key:
             self.vy = -self.speed
-        elif s and not w:
+        elif down_key and not up_key:
             self.vy = self.speed
 
-        if (a or d) and (w or s) != 0:  # se estiver movendo na diagonal
+        if (left_key ^ right_key) and (up_key ^ down_key) != 0:  # se estiver movendo na diagonal
             self.vx /= (2 ** 0.5)
             self.vy /= (2 ** 0.5)
 

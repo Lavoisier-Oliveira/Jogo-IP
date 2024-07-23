@@ -11,21 +11,26 @@ pygame.display.set_caption(CAPTION)
 clock = pygame.time.Clock()
 
 
-tank = Tank('B', 2, [100, 100], 50, 10)
+p1 = Tank('A', 2, [100, 100], 50, 10, (pygame.K_a, pygame.K_w, pygame.K_s, pygame.K_d))
+p2 = Tank('B', 2, [200, 200], 50, 10, (pygame.K_g, pygame.K_y, pygame.K_h, pygame.K_j))
+p3 = Tank('C', 2, [300, 300], 50, 10, (pygame.K_LEFT, pygame.K_UP, pygame.K_DOWN, pygame.K_RIGHT))
+p4 = Tank('D', 2, [400, 400], 50, 10, (pygame.K_KP4, pygame.K_KP8, pygame.K_KP5, pygame.K_KP6))
 
 while True:
 	# Poll for events
 	for event in pygame.event.get():
-		if event.type == pygame.QUIT:
+		if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):  # para sair, pressione o X da janela ou ESC
 			pygame.quit()
 			sys.exit()
 
 	# Atualizar o estado do tanque
-	tank.update()
+	for player in Tank.tanks:
+		player.update()
 
 	# Renderizar o jogo
 	screen.fill("black")  # Preencher a tela com uma cor (preto)
-	screen.blit(tank.image, tank.rect.topleft)  # Desenhar o tanque na nova posição
+	for player in Tank.tanks:
+		screen.blit(player.image, player.rect.topleft)  # Desenhar o tanque na nova posição
 
 	# Flip the display to put your work on screen
 	pygame.display.flip()
