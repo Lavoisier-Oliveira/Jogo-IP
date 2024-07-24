@@ -68,8 +68,7 @@ class Tank:
 
         # Preserve the center position while rotating
         self.image = pygame.transform.rotate(self.original_image, self.angle)
-        self.rect = self.image.get_rect(
-            center=self.rect.center)  # Atualiza o retângulo da imagem com o centro preservado
+        self.rect = self.image.get_rect(center=self.rect.center)  # Atualiza o retângulo da imagem com o centro preservado
 
     def move(self):
 
