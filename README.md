@@ -1,1 +1,0 @@
-# Projeto da Disciplina de Introdução à Programação
