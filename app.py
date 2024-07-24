@@ -14,8 +14,8 @@ clock = pygame.time.Clock()
 
 p1 = Tank('A', 2, [100, 100], 50, 10, KEYS_PLAYER_1)
 p2 = Tank('B', 2, [200, 200], 50, 10, KEYS_PLAYER_2)
-p3 = Tank('C', 2, [300, 300], 50, 10, KEYS_PLAYER_3)
-p4 = Tank('D', 2, [400, 400], 50, 10, KEYS_PLAYER_4)
+# p3 = Tank('C', 2, [300, 300], 50, 10, KEYS_PLAYER_3)
+# p4 = Tank('D', 2, [400, 400], 50, 10, KEYS_PLAYER_4)
 
 game_is_running = True
 while game_is_running:
