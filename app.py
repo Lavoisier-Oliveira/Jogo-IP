@@ -2,20 +2,21 @@ import pygame
 import sys
 from parameters import *
 from entities.tank import Tank
+from random import randint
 
 # PyGame Setup
 pygame.init()
 monitor = pygame.display.Info()  # allow to get current widht and height in any monitor
 screen = pygame.display.set_mode((monitor.current_w, monitor.current_h))
 pygame.display.set_caption(CAPTION)
-background_image = pygame.image.load(R'assets\backgrounds\back2.jpg') # Load the background image
-background_image = pygame.transform.scale(background_image, (monitor.current_w, monitor.current_h)) # Resize the background image to fit the screen
+background_image = pygame.image.load(R'assets\backgrounds\back2.jpg')  # Load the background image
+background_image = pygame.transform.scale(background_image, (monitor.current_w, monitor.current_h))  # Resize the background image to fit the screen
 clock = pygame.time.Clock()
 
-p1 = Tank('A', 2, [100, 100], 50, 10, KEYS_PLAYER_1)
-p2 = Tank('B', 2, [200, 200], 50, 10, KEYS_PLAYER_2)
-# p3 = Tank('C', 2, [300, 300], 50, 10, KEYS_PLAYER_3)
-# p4 = Tank('D', 2, [400, 400], 50, 10, KEYS_PLAYER_4)
+p1 = Tank('A', randint(1, 10), [100, 100], 40, 15, KEYS_PLAYER_1)
+p2 = Tank('B', randint(1, 10), [200, 200], 50, 11, KEYS_PLAYER_2)
+p3 = Tank('C', randint(1, 10), [300, 300], 60, 10, KEYS_PLAYER_3)
+p4 = Tank('D', randint(1, 10), [400, 400], 90, 7, KEYS_PLAYER_4)
 
 game_is_running = True
 while game_is_running:
@@ -24,7 +25,7 @@ while game_is_running:
 		if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):  # para sair, pressione o X da janela ou ESC
 			game_is_running = False
 	
-	screen.blit(background_image, (0,0))  # Desenhar o background
+	screen.blit(background_image, (0, 0))  # Desenhar o background
 
 	# Atualizar o estado do tanque
 	for player in Tank.tanks:
