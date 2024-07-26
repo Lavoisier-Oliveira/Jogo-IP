@@ -17,17 +17,18 @@ clock = pygame.time.Clock()
 
 p1 = Tank('A', randint(1, 8), [100, 100], 40, 15, KEYS_PLAYER_1)
 p2 = Tank('B', randint(1, 8), [200, 200], 50, 11, KEYS_PLAYER_2)
-p3 = Tank('C', randint(1, 8), [300, 300], 60, 10, KEYS_PLAYER_3)
-p4 = Tank('D', randint(1, 8), [400, 400], 90, 7, KEYS_PLAYER_4)
+score_p1, score_p2 = 0, 0
 
 # Instanciando a classe Flag 
 flag_img = pygame.image.load('assets/Collectibles/bandeira.png') # Imagem da bandeira
-flag_img = pygame.transform.scale(flag_img, (monitor.current_w//37, monitor.current_h//12)) # Transformando o tamanho da imagem da bandeira
-flag = Flag((monitor.current_w, monitor.current_h), flag_img) # Classe Flag instanciada 
-flag_cycle, del_flag_time, flag_p = 1, 1, False # Variavéis para fazer a checagem das condições da bandeira na tela
+size_img = (monitor.current_w//37, monitor.current_h//12)
+flag_img = pygame.transform.scale(flag_img, (size_img[0], size_img[1])) # Transformando o tamanho da imagem da bandeira
+flag = Flag((monitor.current_w, monitor.current_h), flag_img, size_img) # Classe Flag instanciada 
+flag_cycle, del_flag_time, flag_p, flag_taken = 1, 1, False, False # Variavéis para fazer a checagem das condições da bandeira na tela
 
 game_is_running = True
 while game_is_running:
+	font = pygame.font.Font(None, 48)
 	game_time = pygame.time.get_ticks()
 	# Poll for events
 	for event in pygame.event.get():
@@ -39,18 +40,32 @@ while game_is_running:
 	# Atualizar o estado do tanque
 	for player in Tank.tanks:
 		player.update()
-	
+
+	score_tab1 = font.render(f'P1: {score_p1}', True, (0, 0, 0))
+	screen.blit(score_tab1, (10, background_image.get_height()-50))
+	score_tab2 = font.render(f'P2: {score_p2}', True, (0, 0, 0))
+	screen.blit(score_tab2, (background_image.get_width() - 100, background_image.get_height()-50))
+
 	# Gerando uma bandeira em um local aleatório no intervalo de 7 segundos
 	if game_time > 7000*flag_cycle and game_time < 10000*flag_cycle:
 		flag.render(screen) # Função da classe Flag para renderizar a flag em um local aleatório
 		flag_cycle += 1
-		flag_p = True
+		flag_p, flag_taken = True, False
 	# Após 3 segundos que a bandeira foi gerada, ela não deve mais aparecer na tela
 	if game_time > 10000*del_flag_time: 
 		flag_p = False
 		del_flag_time += 1
 	if flag_p:
 		flag.update(screen)	# Função para sempre renderizar a bandeira na tela
+	
+	if p1.rect.colliderect(flag.rect_self(flag_p)):
+		if not flag_taken:
+			score_p1 += 1
+		flag_p, flag_taken = False, True
+	elif p2.rect.colliderect(flag.rect_self(flag_p)):
+		if not flag_taken:
+			score_p2 += 1
+		flag_p, flag_taken = False, True
 
 	# Renderizar o jogo
 	# screen.fill("black")  # Preencher a tela com uma cor (preto)

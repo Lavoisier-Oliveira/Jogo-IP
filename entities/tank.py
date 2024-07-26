@@ -90,7 +90,6 @@ class Tank:
         self.rect.center = self.current_pos  # Atualiza a posição do retângulo com a nova posição
 
         for player in Tank.tanks:
-            print(player != self)
             if (player is not self) and (self.rect.colliderect(player)):
                 self.current_pos[0] -= self.vx
                 self.current_pos[1] -= self.vy
