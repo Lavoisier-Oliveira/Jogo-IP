@@ -22,8 +22,19 @@ class Tank:
         Tank.tanks.append(self)
 
     def read_input(self):
-
-        self.vx = self.vy = 0  # current vx and vy are still holding the values from previous read
+        """
+        # tentativa de inercia. não funciona pra diagonal e não é proporcional ao tamanho do tanque, apenas à velocidade
+        desaceleracao = 0.5
+        if self.vx > 0:
+            self.vx = round(self.vx-desaceleracao, 1)
+        elif self.vx < 0:
+            self.vx = round(self.vx+desaceleracao, 1)
+        if self.vy > 0:
+            self.vy = round(self.vy-desaceleracao, 1)
+        elif self.vy < 0:
+            self.vy = round(self.vy+desaceleracao, 1)
+        """
+        self.vx = self.vy = 0  # current vx and vy are still holding the values from previous read  # remover isso se usar inercia
 
         keys = pygame.key.get_pressed()
         left_key, up_key, down_key, right_key = keys[self.keys[0]], keys[self.keys[1]], keys[self.keys[2]], keys[self.keys[3]]
@@ -68,8 +79,7 @@ class Tank:
 
         # Preserve the center position while rotating
         self.image = pygame.transform.rotate(self.original_image, self.angle)
-        self.rect = self.image.get_rect(
-            center=self.rect.center)  # Atualiza o retângulo da imagem com o centro preservado
+        self.rect = self.image.get_rect(center=self.rect.center)  # Atualiza o retângulo da imagem com o centro preservado
 
     def move(self):
 
@@ -79,7 +89,14 @@ class Tank:
             self.current_pos[1] += self.vy
         self.rect.center = self.current_pos  # Atualiza a posição do retângulo com a nova posição
 
+        for player in Tank.tanks:
+            print(player != self)
+            if (player is not self) and (self.rect.colliderect(player)):
+                self.current_pos[0] -= self.vx
+                self.current_pos[1] -= self.vy
+
     def update(self):
         self.read_input()
-        self.move()
-        self.angle_image()
+        if self.vx != 0 or self.vy != 0:
+            self.move()
+            self.angle_image()
