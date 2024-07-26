@@ -18,8 +18,13 @@ p2 = Tank('B', randint(1, 10), [200, 200], 50, 11, KEYS_PLAYER_2)
 p3 = Tank('C', randint(1, 10), [300, 300], 60, 10, KEYS_PLAYER_3)
 p4 = Tank('D', randint(1, 10), [400, 400], 90, 7, KEYS_PLAYER_4)
 
+imagem_municao = pygame.image.load('assets\Effects\Granade_Shell.png')
+municao = Municao( imagem_municao, (monitor.current_w, monitor.current_h))
+ciclo_aparecer, ciclo_desaparecer, aparicao_municao = 1, 1, False
+
 game_is_running = True
 while game_is_running:
+	game_time = pygame.time.get_ticks()
 	# Poll for events
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):  # para sair, pressione o X da janela ou ESC
@@ -30,6 +35,19 @@ while game_is_running:
 	# Atualizar o estado do tanque
 	for player in Tank.tanks:
 		player.update()
+
+	if game_time > 5000*ciclo_aparecer and game_time < 8000*ciclo_aparecer:
+		municao.render(screen)
+		aparicao_municao = True
+		ciclo_aparecer += 1
+
+	if game_time > 8000*ciclo_desaparecer:
+		aparicao_municao = False
+		ciclo_desaparecer += 1
+		print('a')
+
+	if aparicao_municao:
+		municao.update(screen)
 
 	# Renderizar o jogo
 	# screen.fill("black")  # Preencher a tela com uma cor (preto)
