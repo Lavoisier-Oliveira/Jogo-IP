@@ -20,10 +20,11 @@ p2 = Tank('B', randint(1, 8), [200, 200], 50, 11, KEYS_PLAYER_2)
 score_p1, score_p2 = 0, 0
 
 # Instanciando a classe Flag 
-flag_img = pygame.image.load('assets/Collectibles/bandeira.png') # Imagem da bandeira
+flag_img = [pygame.image.load('assets/Collectibles/bandeira.png'), pygame.image.load('assets/Collectibles/bandeira_azul.png')] # Imagem da bandeira
 size_img = (monitor.current_w//37, monitor.current_h//12)
-flag_img = pygame.transform.scale(flag_img, (size_img[0], size_img[1])) # Transformando o tamanho da imagem da bandeira
-flag = Flag((monitor.current_w, monitor.current_h), flag_img, size_img) # Classe Flag instanciada 
+# Transformando o tamanho da imagem da bandeira
+flag_img[0], flag_img[1] = pygame.transform.scale(flag_img[0], (size_img[0], size_img[1])), pygame.transform.scale(flag_img[1], (size_img[0], size_img[1])) 
+flag = Flag((monitor.current_w, monitor.current_h), flag_img[0], size_img) # Classe Flag instanciada 
 flag_cycle, del_flag_time, flag_p, flag_taken = 1, 1, False, False # Variavéis para fazer a checagem das condições da bandeira na tela
 
 game_is_running = True
@@ -41,10 +42,12 @@ while game_is_running:
 	for player in Tank.tanks:
 		player.update()
 
-	score_tab1 = font.render(f'P1: {score_p1}', True, (0, 0, 0))
-	screen.blit(score_tab1, (10, background_image.get_height()-50))
-	score_tab2 = font.render(f'P2: {score_p2}', True, (0, 0, 0))
-	screen.blit(score_tab2, (background_image.get_width() - 100, background_image.get_height()-50))
+	score_tab1 = font.render(f': {score_p1}', True, (0, 0, 0))
+	screen.blit(flag_img[0], (monitor.current_w*0.01, background_image.get_height()*0.9))
+	screen.blit(score_tab1, (background_image.get_width()*0.036, background_image.get_height()*0.93))
+	score_tab2 = font.render(f': {score_p2}', True, (0, 0, 0))
+	screen.blit(flag_img[1], (monitor.current_w*0.904, background_image.get_height()*0.9))
+	screen.blit(score_tab2, (background_image.get_width()*0.93, background_image.get_height()*0.93))
 
 	# Gerando uma bandeira em um local aleatório no intervalo de 7 segundos
 	if game_time > 7000*flag_cycle and game_time < 10000*flag_cycle:
@@ -59,9 +62,10 @@ while game_is_running:
 		flag.update(screen)	# Função para sempre renderizar a bandeira na tela
 	
 	if p1.rect.colliderect(flag.rect_self(flag_p)):
-		if not flag_taken:
-			score_p1 += 1
-		flag_p, flag_taken = False, True
+		print(1)
+		# if not flag_taken:
+		# 	score_p1 += 1
+		# flag_p, flag_taken = False, True
 	elif p2.rect.colliderect(flag.rect_self(flag_p)):
 		if not flag_taken:
 			score_p2 += 1
