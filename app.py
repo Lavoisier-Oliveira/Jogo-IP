@@ -62,10 +62,9 @@ while game_is_running:
 		flag.update(screen)	# Função para sempre renderizar a bandeira na tela
 	
 	if p1.rect.colliderect(flag.rect_self(flag_p)):
-		print(1)
-		# if not flag_taken:
-		# 	score_p1 += 1
-		# flag_p, flag_taken = False, True
+		if not flag_taken:
+			score_p1 += 1
+		flag_p, flag_taken = False, True
 	elif p2.rect.colliderect(flag.rect_self(flag_p)):
 		if not flag_taken:
 			score_p2 += 1
