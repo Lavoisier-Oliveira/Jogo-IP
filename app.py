@@ -3,6 +3,7 @@ import sys
 from parameters import *
 from entities.tank import Tank
 from random import randint
+from entities.municao import Municao
 
 # PyGame Setup
 pygame.init()
@@ -13,13 +14,13 @@ background_image = pygame.image.load(R'assets\backgrounds\back2.jpg')  # Load th
 background_image = pygame.transform.scale(background_image, (monitor.current_w, monitor.current_h))  # Resize the background image to fit the screen
 clock = pygame.time.Clock()
 
-p1 = Tank('A', randint(1, 10), [100, 100], 40, 15, KEYS_PLAYER_1)
-p2 = Tank('B', randint(1, 10), [200, 200], 50, 11, KEYS_PLAYER_2)
-p3 = Tank('C', randint(1, 10), [300, 300], 60, 10, KEYS_PLAYER_3)
-p4 = Tank('D', randint(1, 10), [400, 400], 90, 7, KEYS_PLAYER_4)
+p1 = Tank('A', 2, [100, 100], 40, 15, KEYS_PLAYER_1)
+p2 = Tank('B', 2, [200, 200], 50, 11, KEYS_PLAYER_2)
+p3 = Tank('C', 2, [300, 300], 60, 10, KEYS_PLAYER_3)
+p4 = Tank('D', 2, [400, 400], 90, 7, KEYS_PLAYER_4)
 
 imagem_municao = pygame.image.load('assets\Effects\Granade_Shell.png')
-municao = Municao( imagem_municao, (monitor.current_w, monitor.current_h))
+municao = Municao((monitor.current_w, monitor.current_h), (60, 60), imagem_municao)
 ciclo_aparecer, ciclo_desaparecer, aparicao_municao = 1, 1, False
 
 game_is_running = True
@@ -36,6 +37,7 @@ while game_is_running:
 	for player in Tank.tanks:
 		player.update()
 
+	#lógica da munição
 	if game_time > 5000*ciclo_aparecer and game_time < 8000*ciclo_aparecer:
 		municao.render(screen)
 		aparicao_municao = True
@@ -48,6 +50,8 @@ while game_is_running:
 
 	if aparicao_municao:
 		municao.update(screen)
+		if municao.interacao(p1.rect) or municao.interacao(p2.rect): #caso os tanques entreme em contato com a munição então ela desaparece
+			aparicao_municao = False
 
 	# Renderizar o jogo
 	# screen.fill("black")  # Preencher a tela com uma cor (preto)

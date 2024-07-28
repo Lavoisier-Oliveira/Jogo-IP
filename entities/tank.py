@@ -10,7 +10,7 @@ class Tank:
     angle = 0  # Armazena o ângulo atual # talvez seja possível armar uma equação que, baseado na posição inicial do tanque, forneça o angulo inicial tal que este aponte para o centro da tela - seria preciso passar as dimensoes da tela para o construtor e importar uma função trigonometrica para tranformar os catetos em angulo # dessa forma o angulo seria atribuido no construtor
     vx, vy = 0, 0
 
-    def __init__(self, color: str, model: int, initial_pos: list, size: int, speed: int, keys: tuple):
+    def __init__(self, color: str, model: int, initial_pos: list, size: int, speed: int, keys: tuple, municao: int):
         self.keys = keys  # pass pygame.K_x in the order: left, up, down, right
         self.image = pygame.image.load(f"assets/Hulls_Color_{color}/Hull_0{model}.png")  # Carrega a imagem do tanque
         self.size = size
@@ -19,6 +19,7 @@ class Tank:
         self.original_image = self.image.copy()  # Guarda a imagem original para futuras rotações
         self.rect = self.image.get_rect(center=self.current_pos)
         self.speed = speed  # pixels percorridos por tick
+        self.municao = municao
         Tank.tanks.append(self)
 
     def read_input(self):
@@ -94,6 +95,9 @@ class Tank:
             if (player is not self) and (self.rect.colliderect(player)):
                 self.current_pos[0] -= self.vx
                 self.current_pos[1] -= self.vy
+
+    def qnt_municao(self):
+        #logica: sempre que o botão de atirar for apertado a munição irá decrescer e quando o tanque entrar em contato a qnt de munições deve aumentar
 
     def update(self):
         self.read_input()
