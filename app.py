@@ -14,6 +14,13 @@ background_image = pygame.image.load(R'assets\backgrounds\back2.jpg')  # Load th
 background_image = pygame.transform.scale(background_image, (monitor.current_w, monitor.current_h))  # Resize the background image to fit the screen
 clock = pygame.time.Clock()
 
+pygame.font.init()
+font_padrao=pygame.font.get_default_font()
+fonte_vida=pygame.font.SysFont(font_padrao,35)
+vidap1=20
+vidap2=20
+
+
 engrenagem = Engrenagem(monitor.current_w, monitor.current_h)
 engrenagem_vezes=1
 
@@ -32,16 +39,29 @@ while game_is_running:
 	
 	screen.blit(background_image, (0, 0))  # Desenhar o background
 
+	vida1=fonte_vida.render(f"PLAYER 1 : {vidap1}",1,(255,255,255))
+	vida2=fonte_vida.render(f"PLAYER 2 : {vidap2}",1,(255,255,255))
+	screen.blit(vida1,(50,50))
+	screen.blit(vida2,(monitor.current_w-230,50))
+
 	# Atualizar o estado do tanque
 	for player in Tank.tanks:
 		player.update()
 
- 
+
 	if game_time > 10000*engrenagem_vezes:
-		engrenagem.desenhar_engrenagem(screen)
+		engrenagem.render(screen)
 		engrenagem_vezes += 1
+		engrenagem_colisao=False
+		aparicao_engrenagem = pygame.time.get_ticks()
+		cooldown=5000
 		
- 
+	###se tiver colisão entre os players e a engrenagem=vida e se vida palyer for menor que 20
+	
+
+	#se passar 5 segundos e ninguem pegar a engrenagem
+	if ((pygame.time.get_ticks() - aparicao_engrenagem >=cooldown)and engrenagem_colisao==False):
+		engrenagem.death(self)
 	# Renderizar o jogo
 	# screen.fill("black")  # Preencher a tela com uma cor (preto)
 	for player in Tank.tanks:
