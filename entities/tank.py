@@ -24,7 +24,7 @@ class Tank:
 
     def read_input(self):
 
-        k = 10  # coeficiente de inercia - diretamente proporcional à aceleração  # valores recomendados : 10 até 200
+        k = 100  # coeficiente de inercia - diretamente proporcional à aceleração  # valores recomendados : 10 até 200
         aceleracao = k/((self.speed*(self.size**2))**0.5)  # formula empirica (saí testando e ficou top)
         desaceleracao = aceleracao
 
