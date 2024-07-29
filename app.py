@@ -13,10 +13,10 @@ background_image = pygame.image.load(R'assets\backgrounds\back2.jpg')  # Load th
 background_image = pygame.transform.scale(background_image, (monitor.current_w, monitor.current_h))  # Resize the background image to fit the screen
 clock = pygame.time.Clock()
 
-p1 = Tank('A', randint(1, 10), [100, 100], 40, 15, KEYS_PLAYER_1)
-p2 = Tank('B', randint(1, 10), [200, 200], 50, 11, KEYS_PLAYER_2)
-p3 = Tank('C', randint(1, 10), [300, 300], 60, 10, KEYS_PLAYER_3)
-p4 = Tank('D', randint(1, 10), [400, 400], 90, 7, KEYS_PLAYER_4)
+p1 = Tank('A', randint(1, 8), [100, 100], 40, 15, KEYS_PLAYER_1)
+p2 = Tank('B', randint(1, 8), [200, 200], 50, 11, KEYS_PLAYER_2)
+p3 = Tank('C', randint(1, 8), [300, 300], 60, 10, KEYS_PLAYER_3)
+p4 = Tank('D', randint(1, 8), [400, 400], 90, 7, KEYS_PLAYER_4)
 
 game_is_running = True
 while game_is_running:
