@@ -14,17 +14,18 @@ background_image = pygame.image.load(R'assets\backgrounds\back2.jpg')  # Load th
 background_image = pygame.transform.scale(background_image, (monitor.current_w, monitor.current_h))  # Resize the background image to fit the screen
 clock = pygame.time.Clock()
 
-p1 = Tank('A', 2, [100, 100], 40, 15, KEYS_PLAYER_1)
-p2 = Tank('B', 2, [200, 200], 50, 11, KEYS_PLAYER_2)
-p3 = Tank('C', 2, [300, 300], 60, 10, KEYS_PLAYER_3)
-p4 = Tank('D', 2, [400, 400], 90, 7, KEYS_PLAYER_4)
+p1 = Tank('A', 2, [100, 100], 40, 15, KEYS_PLAYER_1, 20)
+p2 = Tank('B', 2, [200, 200], 50, 11, KEYS_PLAYER_2, 20)
 
 imagem_municao = pygame.image.load('assets\Effects\Granade_Shell.png')
-municao = Municao((monitor.current_w, monitor.current_h), (60, 60), imagem_municao)
+tamanho_imagem = (monitor.current_w//37, monitor.current_h//12)
+imagem_municao = pygame.transform.scale(imagem_municao, (tamanho_imagem[0], tamanho_imagem[1]))
+municao = Municao((monitor.current_w, monitor.current_h), imagem_municao, tamanho_imagem)
 ciclo_aparecer, ciclo_desaparecer, aparicao_municao = 1, 1, False
 
 game_is_running = True
 while game_is_running:
+	font = pygame.font.Font(None, 48)
 	game_time = pygame.time.get_ticks()
 	# Poll for events
 	for event in pygame.event.get():
@@ -36,6 +37,12 @@ while game_is_running:
 	# Atualizar o estado do tanque
 	for player in Tank.tanks:
 		player.update()
+
+	qnt_municao1 = font.render(f'Munição: {p1.municao}', True, (0, 0, 0))
+	screen.blit(qnt_municao1, (10, background_image.get_height() - 40))
+	qnt_municao2 = font.render(f'Munição: {p2.municao}', True, (0, 0, 0))
+	screen.blit(qnt_municao2, (background_image.get_width() -100, background_image.get_height() - 40))
+
 
 	#lógica da munição
 	if game_time > 5000*ciclo_aparecer and game_time < 8000*ciclo_aparecer:
@@ -50,8 +57,13 @@ while game_is_running:
 
 	if aparicao_municao:
 		municao.update(screen)
-		if municao.interacao(p1.rect) or municao.interacao(p2.rect): #caso os tanques entreme em contato com a munição então ela desaparece
-			aparicao_municao = False
+
+	if p1.rect.collidedict(municao.rect_municao()):
+		aparicao_municao = False
+		p1.municao += 3
+	elif p2.rect.collidedict(municao.rect_municao()):
+		aparicao_municao = False
+		p2.municao += 3
 
 	# Renderizar o jogo
 	# screen.fill("black")  # Preencher a tela com uma cor (preto)

@@ -17,7 +17,5 @@ class Municao:
     def update(self, display):
         display.blit(self.image, (self.current_position[0], self.current_position[1]))
 
-    def interacao(self, rect_tanque):
-        self.area_municao = pygame.rect(self.current_position[0], self.current_position[1], self.size[0], self.size[1])
-        return self.area_municao.colliderect(rect_tanque)
-
+    def rect_municao(self):
+        return pygame.Rect(self.current_position[0], self.current_position[1], self.size[0], self.size[1])

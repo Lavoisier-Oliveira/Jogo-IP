@@ -96,9 +96,6 @@ class Tank:
                 self.current_pos[0] -= self.vx
                 self.current_pos[1] -= self.vy
 
-    def qnt_municao(self):
-        #logica: sempre que o botão de atirar for apertado a munição irá decrescer e quando o tanque entrar em contato a qnt de munições deve aumentar
-
     def update(self):
         self.read_input()
         if self.vx != 0 or self.vy != 0:
