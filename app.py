@@ -7,24 +7,24 @@ from screens.tank_selection_screen import TankSelectionScreen
 from screens.game_screen import GameScreen
 
 # PyGame Setup
-screen = pygame.display.set_mode(SCREEN_SIZE)
-clock = pygame.time.Clock()
+screen = pygame.display.set_mode(SCREEN_SIZE) # Cria a janela do jogo com o tamanho da tela do monitor
+clock = pygame.time.Clock() # Cria um objeto para ajudar a controlar o tempo
 
-tank_selection_screen = TankSelectionScreen()
-game_screen = GameScreen()
-current_screen = tank_selection_screen
+tank_selection_screen = TankSelectionScreen() # Cria a tela de seleção de tanques
+game_screen = GameScreen() # Cria a tela do jogo
+current_screen = tank_selection_screen # Define a tela atual como a tela de seleção de tanques
 
 game_is_running = True
 while game_is_running:
 	# Poll for events
 	for event in pygame.event.get():
 		# para sair, pressione o X da janela ou ESC
-		if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
+		if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE): # Verifica se o evento é de fechar a janela
 			game_is_running = False
 		else:
-			current_screen.handle_event(event)
+			current_screen.handle_event(event) # Trata os eventos da tela atual
 	
-	current_screen.draw(screen)
+	current_screen.draw(screen) # Desenha a tela atual
 
 	if tank_selection_screen.start_game:
 		
