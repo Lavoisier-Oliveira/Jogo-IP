@@ -7,6 +7,7 @@ class TankSelectionScreen:
 		self.colors = ('A', 'B', 'C', 'D')
 		self.color = self.colors[0]
 		self.model = 1
+		self.choice_p1, self.choice_p2 = True, False # Escolha do jogador 1 e jogador 2
 
 		self.font = pygame.font.Font(None, 50)
 		self.tank_image = self.tank_image = pygame.image.load(f"assets/Hulls_Color_{self.color}/Hull_0{self.model}.png")
@@ -36,7 +37,15 @@ class TankSelectionScreen:
 				self.model = 1 if self.model == 8 else self.model + 1 # Mantém as escolhas no conjunto de 1 a 8
 				self.tank_image = pygame.image.load(f"assets/Hulls_Color_{self.color}/Hull_0{self.model}.png")
 			elif self.select_tank_button.collidepoint(event.pos):
-				self.start_game = True
+				if self.choice_p2:
+					self.start_game = True
+
+				if self.choice_p1:
+					self.tank_player1 = (self.color, self.model)
+				elif self.choice_p2:
+					self.tank_player2 = (self.color, self.model)
+
+				self.choice_p1, self.choice_p2 = False, True # Muda a escolha para o jogador 2
 
 			# Verifica se o clique foi dentro do retângulo do botão da cor do tanque
 			if self.left_color_rect.collidepoint(event.pos):
@@ -50,7 +59,8 @@ class TankSelectionScreen:
 	def draw(self, screen):
 		screen.fill(BLACK_COLOR)
 		self.font_titulo = pygame.font.Font(None, 75)
-		text = self.font_titulo.render('Escolha seu tanque', True, WHITE_COLOR)
+		jogador = 1 if self.choice_p1 else 2
+		text = self.font_titulo.render(f'ESCOLHA SEU TANQUE - JOGADOR {jogador}', True, WHITE_COLOR)
 		text_w, text_h = text.get_size()
 		screen.blit(text, ((SCREEN_WIDTH - text_w) // 2, 50, text_w, text_h))
 
@@ -95,6 +105,6 @@ class TankSelectionScreen:
 
 		# Texto do Jogar
 		pygame.draw.rect(screen, GREEN_LIGHT_COLOR, self.select_tank_button)
-		select_text = self.font.render('JOGAR', True, WHITE_COLOR)
+		select_text = self.font.render('ESCOLHER', True, WHITE_COLOR)
 		select_text_rect = select_text.get_rect(center=self.select_tank_button.center)
 		screen.blit(select_text, select_text_rect)

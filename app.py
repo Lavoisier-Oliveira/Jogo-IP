@@ -3,8 +3,8 @@ import sys
 from parameters import *
 from entities.tank import Tank
 from random import randint
-from tank_selection_screen import TankSelectionScreen
-from game_screen import GameScreen
+from screens.tank_selection_screen import TankSelectionScreen
+from screens.game_screen import GameScreen
 
 # PyGame Setup
 screen = pygame.display.set_mode(SCREEN_SIZE)
@@ -29,10 +29,8 @@ while game_is_running:
 	if tank_selection_screen.start_game:
 		
 		# Inicializa os tanques
-		p1 = Tank('A', randint(1, 8), [100, 100], 40, 15, KEYS_PLAYER_1)
-		p2 = Tank('B', randint(1, 8), [200, 200], 50, 11, KEYS_PLAYER_2)
-		p3 = Tank('C', randint(1, 8), [300, 300], 60, 10, KEYS_PLAYER_3)
-		p4 = Tank(tank_selection_screen.color, tank_selection_screen.model, [400, 400], 90,  7, KEYS_PLAYER_4)
+		p1 = Tank(tank_selection_screen.tank_player1[0], tank_selection_screen.tank_player1[1], [100, 100], 50, 15, KEYS_PLAYER_1)
+		p2 = Tank(tank_selection_screen.tank_player2[0], tank_selection_screen.tank_player2[1], [400, 400], 50, 15, KEYS_PLAYER_2)
 		current_screen = game_screen
 
 		tank_selection_screen.start_game = False
