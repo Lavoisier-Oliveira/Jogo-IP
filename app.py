@@ -3,40 +3,38 @@ import sys
 from parameters import *
 from entities.tank import Tank
 from random import randint
+from screens.tank_selection_screen import TankSelectionScreen
+from screens.game_screen import GameScreen
 
 # PyGame Setup
-pygame.init()
-monitor = pygame.display.Info()  # allow to get current widht and height in any monitor
-screen = pygame.display.set_mode((monitor.current_w, monitor.current_h))
-pygame.display.set_caption(CAPTION)
-background_image = pygame.image.load(R'assets\backgrounds\back2.jpg')  # Load the background image
-background_image = pygame.transform.scale(background_image, (monitor.current_w, monitor.current_h))  # Resize the background image to fit the screen
+screen = pygame.display.set_mode(SCREEN_SIZE)
 clock = pygame.time.Clock()
 
-p1 = Tank('A', randint(1, 10), [100, 100], 40, 15, KEYS_PLAYER_1)
-p2 = Tank('B', randint(1, 10), [200, 200], 50, 11, KEYS_PLAYER_2)
-p3 = Tank('C', randint(1, 10), [300, 300], 60, 10, KEYS_PLAYER_3)
-p4 = Tank('D', randint(1, 10), [400, 400], 90, 7, KEYS_PLAYER_4)
+tank_selection_screen = TankSelectionScreen()
+game_screen = GameScreen()
+current_screen = tank_selection_screen
 
 game_is_running = True
 while game_is_running:
 	# Poll for events
 	for event in pygame.event.get():
-		if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):  # para sair, pressione o X da janela ou ESC
+		# para sair, pressione o X da janela ou ESC
+		if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
 			game_is_running = False
+		else:
+			current_screen.handle_event(event)
 	
-	screen.blit(background_image, (0, 0))  # Desenhar o background
+	current_screen.draw(screen)
 
-	# Atualizar o estado do tanque
-	for player in Tank.tanks:
-		player.update()
+	if tank_selection_screen.start_game:
+		
+		# Inicializa os tanques
+		p1 = Tank(tank_selection_screen.tank_player1[0], tank_selection_screen.tank_player1[1], [100, 100], 50, 15, KEYS_PLAYER_1)
+		p2 = Tank(tank_selection_screen.tank_player2[0], tank_selection_screen.tank_player2[1], [400, 400], 50, 15, KEYS_PLAYER_2)
+		current_screen = game_screen
 
-	# Renderizar o jogo
-	# screen.fill("black")  # Preencher a tela com uma cor (preto)
-	for player in Tank.tanks:
-		screen.blit(player.image, player.rect.topleft)  # Desenhar o tanque na nova posição
-
-	# Flip the display to put your work on screen
+		tank_selection_screen.start_game = False
+	
 	pygame.display.flip()
 	clock.tick(FPS)
 
