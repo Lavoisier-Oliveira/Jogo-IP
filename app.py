@@ -14,17 +14,11 @@ clock = pygame.time.Clock()
 
 score_p1, score_p2 = 0, 0
 
-# Instanciando a classe Flag 
-flag_img = [pygame.image.load('assets/Collectibles/bandeira.png'), pygame.image.load('assets/Collectibles/bandeira_azul.png')] # Imagem da bandeira
-size_img = (SCREEN_WIDTH//37, SCREEN_HEIGHT//12)
-# Transformando o tamanho da imagem da bandeira
-flag_img[0], flag_img[1] = pygame.transform.scale(flag_img[0], (size_img[0], size_img[1])), pygame.transform.scale(flag_img[1], (size_img[0], size_img[1])) 
-flag = Flag((SCREEN_WIDTH, SCREEN_HEIGHT), flag_img[0], size_img) # Classe Flag instanciada 
-flag_cycle, del_flag_time, flag_p, flag_taken = 1, 1, False, False # Variavéis para fazer a checagem das condições da bandeira na tela
-
 tank_selection_screen = TankSelectionScreen()
 game_screen = GameScreen()
 current_screen = tank_selection_screen
+flag = Flag()
+flag_cycle, del_flag_time, flag_p, flag_taken = 1, 1, False, False # Variavéis para fazer a checagem das condições da bandeira na tela
 
 game_is_running = True
 while game_is_running:
@@ -54,35 +48,8 @@ while game_is_running:
 
 	# Flip the display to put your work on screen
 		tank_selection_screen.start_game = False
-		
-		score_tab1 = font.render(f': {score_p1}', True, (0, 0, 0))
-		screen.blit(flag_img[0], (SCREEN_WIDTH*0.01, SCREEN_HEIGHT*0.9))
-		screen.blit(score_tab1, (SCREEN_WIDTH*0.036, SCREEN_HEIGHT*0.93))
-		score_tab2 = font.render(f': {score_p2}', True, (0, 0, 0))
-		screen.blit(flag_img[1], (SCREEN_WIDTH*0.904, SCREEN_HEIGHT*0.9))
-		screen.blit(score_tab2, (SCREEN_WIDTH*0.93, SCREEN_HEIGHT*0.93))
-
-		# Gerando uma bandeira em um local aleatório no intervalo de 7 segundos
-		if game_time > 7000*flag_cycle and game_time < 10000*flag_cycle:
-			flag.render(screen) # Função da classe Flag para renderizar a flag em um local aleatório
-			flag_cycle += 1
-			flag_p, flag_taken = True, False
-		# Após 3 segundos que a bandeira foi gerada, ela não deve mais aparecer na tela
-		if game_time > 10000*del_flag_time: 
-			flag_p = False
-			del_flag_time += 1
-		if flag_p:
-			flag.update(screen)	# Função para sempre renderizar a bandeira na tela
-		
-		if p1.rect.colliderect(flag.rect_self(flag_p)):
-			if not flag_taken:
-				score_p1 += 1
-			flag_p, flag_taken = False, True
-		elif p2.rect.colliderect(flag.rect_self(flag_p)):
-			if not flag_taken:
-				score_p2 += 1
-			flag_p, flag_taken = False, True
-
+		flag_res = flag.collision_flag(screen, game_time, flag_cycle, del_flag_time, flag_p, flag_taken, p1, p2, score_p1, score_p2)
+		score_p1, score_p2, flag_cycle, del_flag_time, flag_p, flag_taken = flag_res[0], flag_res[1], flag_res[2], flag_res[3], flag_res[4], flag_res[5];
 	pygame.display.flip()
 	clock.tick(FPS)
 
