@@ -22,7 +22,7 @@ class TankSelectionScreen:
 
 		self.modelo_text_rect = pygame.Rect(self.tank_img_rect.left, self.tank_img_rect.bottom, self.tank_img_rect.width, 50) # Retângulo do texto do modelo
 		self.color_text_rect = pygame.Rect(self.modelo_text_rect.left, self.left_button_rect.bottom, self.tank_img_rect.width, 50) # Retângulo do texto da cor
-		self.select_tank_button = pygame.Rect((SCREEN_WIDTH - 200) // 2, 550, 200, 100) # Retângulo do botão de seleção do tanque
+		self.select_tank_button = pygame.Rect(self.color_text_rect.left, self.left_color_rect.bottom, self.tank_img_rect.width, 50) # Retângulo do botão de seleção do tanque
 
 	def handle_event(self, event):
 		if event.type == pygame.MOUSEBUTTONDOWN:
