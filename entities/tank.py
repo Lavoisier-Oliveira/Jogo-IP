@@ -1,10 +1,10 @@
 import pygame
+import math
 
 pygame.init()
 monitor = pygame.display.Info()
 
 class Tank:
-
     tanks = []
 
     angle = 0  # Armazena o ângulo atual # talvez seja possível armar uma equação que, baseado na posição inicial do tanque, forneça o angulo inicial tal que este aponte para o centro da tela - seria preciso passar as dimensoes da tela para o construtor e importar uma função trigonometrica para tranformar os catetos em angulo # dessa forma o angulo seria atribuido no construtor
@@ -14,85 +14,96 @@ class Tank:
         self.keys = keys  # pass pygame.K_x in the order: left, up, down, right
         self.image = pygame.image.load(f"assets/Hulls_Color_{color}/Hull_0{model}.png")  # Carrega a imagem do tanque
         self.size = size
-        self.image = pygame.transform.scale(self.image, (self.size, self.size)).convert_alpha()  # Redimensiona a imagem do tanque e tranforma num formato mais versatil para o pygame operar
-        self.current_pos = initial_pos  # Posição do tanque
+        self.image = pygame.transform.scale(self.image, (self.size,
+                                                         self.size)).convert_alpha()  # Redimensiona a imagem do tanque e tranforma num formato mais versatil para o pygame operar
         self.original_image = self.image.copy()  # Guarda a imagem original para futuras rotações
-        self.rect = self.image.get_rect(center=self.current_pos)
+        self.rect = self.image.get_rect(center=initial_pos)
         self.speed = speed  # pixels percorridos por tick
         Tank.tanks.append(self)
 
     def read_input(self):
-        """
-        # tentativa de inercia. não funciona pra diagonal e não é proporcional ao tamanho do tanque, apenas à velocidade
-        desaceleracao = 0.5
-        if self.vx > 0:
-            self.vx = round(self.vx-desaceleracao, 1)
-        elif self.vx < 0:
-            self.vx = round(self.vx+desaceleracao, 1)
-        if self.vy > 0:
-            self.vy = round(self.vy-desaceleracao, 1)
-        elif self.vy < 0:
-            self.vy = round(self.vy+desaceleracao, 1)
-        """
-        self.vx = self.vy = 0  # current vx and vy are still holding the values from previous read  # remover isso se usar inercia
+
+        k = 100  # coeficiente de inercia - diretamente proporcional à aceleração  # valores recomendados : 10 até 200
+        aceleracao = k/((self.speed*(self.size**2))**0.5)  # formula empirica (saí testando e ficou top)
+        desaceleracao = aceleracao
 
         keys = pygame.key.get_pressed()
         left_key, up_key, down_key, right_key = keys[self.keys[0]], keys[self.keys[1]], keys[self.keys[2]], keys[self.keys[3]]
 
-        # x axis
-        if left_key and not right_key:
-            self.vx = -self.speed
-        elif right_key and not left_key:
-            self.vx = self.speed
-        # y axis
-        if up_key and not down_key:
-            self.vy = -self.speed
-        elif down_key and not up_key:
-            self.vy = self.speed
+        # X axis
+        if left_key ^ right_key:  # acelera
+            """
+            IMPLEMENTAR:
+            caso o tank acelere para o sentido oposto ao deslocamento, sua velocidade deve diminuir 2x mais rapido do que o faria caso estivesse apenas dissipando
+            """
+            if right_key:
+                self.vx = self.vx + aceleracao if self.vx + aceleracao <= self.speed else self.speed
+            elif left_key:
+                self.vx = self.vx - aceleracao if self.vx - aceleracao >= -self.speed else -self.speed
+        else:  # desacelera
+            if self.vx < 0:
+                self.vx = self.vx + desaceleracao if self.vx < -desaceleracao else 0
+            elif self.vx > 0:
+                self.vx = self.vx - desaceleracao if self.vx > desaceleracao else 0
+        # Y axis
+        if up_key ^ down_key:  # acelera
+            if up_key:
+                self.vy = self.vy - aceleracao if self.vy - aceleracao >= -self.speed else -self.speed
+            elif down_key:
+                self.vy = self.vy + aceleracao if self.vy + aceleracao <= self.speed else self.speed
+        else:  # desacelera
+            if self.vy < 0:
+                self.vy = self.vy + desaceleracao if self.vy < -desaceleracao else 0
+            elif self.vy > 0:
+                self.vy = self.vy - desaceleracao if self.vy > desaceleracao else 0
 
-        if (left_key ^ right_key) and (up_key ^ down_key) != 0:  # se estiver movendo na diagonal
-            self.vx /= (2 ** 0.5)
-            self.vy /= (2 ** 0.5)
-
+        # calibrar vetores x e y quando o resultante ultrapassa o limite(self.speed)
+        if (self.vx**2 + self.vy**2)**0.5 > self.speed:
+            if self.vx >= self.speed/(2**0.5):
+                self.vx -= 1*desaceleracao
+            elif self.vx <= -self.speed/(2**0.5):
+                self.vx += 1*desaceleracao
+            if self.vy >= self.speed/(2**0.5):
+                self.vy -= 1*desaceleracao
+            elif self.vy <= -self.speed / (2 ** 0.5):
+                self.vy += 1*desaceleracao
     def angle_image(self):
-        if self.vx > 0:
-            if self.vy > 0:
-                self.angle = -135
-            elif self.vy < 0:
-                self.angle = -45
-            else:  # self.vy == 0
-                self.angle = -90
-        elif self.vx < 0:
-            if self.vy > 0:
-                self.angle = +135
-            elif self.vy < 0:
-                self.angle = +45
-            else:  # self.vy == 0
-                self.angle = +90
-        else:  # self.vx == 0
-            if self.vy > 0:
-                self.angle = +180
-            elif self.vy < 0:
-                self.angle = 0
-            else:  # self.vy == 0
-                pass
-
+        self.angle = math.degrees(math.atan2(-self.vy, self.vx))-90
         # Preserve the center position while rotating
         self.image = pygame.transform.rotate(self.original_image, self.angle)
         self.rect = self.image.get_rect(center=self.rect.center)  # Atualiza o retângulo da imagem com o centro preservado
 
     def move(self):
 
-        if 0 <= self.current_pos[0]-self.size/2+self.vx and self.current_pos[0]+self.size/2+self.vx <= monitor.current_w:  # (movimento x não atravessa esquerda) e (movimento x não atravessa direita)
-            self.current_pos[0] += self.vx
-        if 0 <= self.current_pos[1]-self.size/2+self.vy and self.current_pos[1]+self.size/2+self.vy <= monitor.current_h:  # (movimento y não atravessa teto) e (movimento y não atravessa chão)
-            self.current_pos[1] += self.vy
-        self.rect.center = self.current_pos  # Atualiza a posição do retângulo com a nova posição
+        test_rect = self.rect.copy()  # um rect de teste simulará o movimento do input, e então testaremos se houve colisão
 
-        for player in Tank.tanks:
-            if (player is not self) and (self.rect.colliderect(player)):
-                self.current_pos[0] -= self.vx
-                self.current_pos[1] -= self.vy
+        # check X collision
+        test_rect.centerx += self.vx
+        x_collision = False
+        if 0 <= test_rect.left and test_rect.right <= monitor.current_w:
+            for player in Tank.tanks:
+                if player is not self:
+                    if test_rect.colliderect(player):
+                        x_collision = True
+        else:
+            x_collision = True
+
+        # check Y collision
+        test_rect.centerx -= self.vx
+        test_rect.centery += self.vy
+        y_collision = False
+        if 0 <= test_rect.top and test_rect.bottom <= monitor.current_h:
+            for player in Tank.tanks:
+                if player is not self:
+                    if test_rect.colliderect(player):
+                        y_collision = True
+        else:
+            y_collision = True
+
+        if not x_collision:
+            self.rect.centerx += self.vx
+        if not y_collision:
+            self.rect.centery += self.vy
 
     def update(self):
         self.read_input()
