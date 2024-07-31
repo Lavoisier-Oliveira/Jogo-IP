@@ -17,8 +17,8 @@ clock = pygame.time.Clock()
 p1 = Tank('A', 2, [100, 100], 40, 15, KEYS_PLAYER_1, 20)
 p2 = Tank('B', 2, [200, 200], 50, 11, KEYS_PLAYER_2, 20)
 
-imagem_municao = pygame.image.load('assets\Effects\Granade_Shell.png')
-tamanho_imagem = (monitor.current_w//37, monitor.current_h//12)
+imagem_municao = pygame.image.load('assets\Effects\Medium_Shell.png')
+tamanho_imagem = (monitor.current_w//25, monitor.current_h//12)
 imagem_municao = pygame.transform.scale(imagem_municao, (tamanho_imagem[0], tamanho_imagem[1]))
 municao = Municao((monitor.current_w, monitor.current_h), imagem_municao, tamanho_imagem)
 ciclo_aparecer, ciclo_desaparecer, aparicao_municao = 1, 1, False
@@ -58,12 +58,14 @@ while game_is_running:
 	if aparicao_municao:
 		municao.update(screen)
 
-	if p1.rect.collidedict(municao.rect_municao()):
+	if p1.rect.colliderect(municao.rect_municao()):
+		if(aparicao_municao):
+			p1.municao += 3
 		aparicao_municao = False
-		p1.municao += 3
-	elif p2.rect.collidedict(municao.rect_municao()):
+	elif p2.rect.colliderect(municao.rect_municao()):
+		if aparicao_municao:
+			p2.municao += 3
 		aparicao_municao = False
-		p2.municao += 3
 
 	# Renderizar o jogo
 	# screen.fill("black")  # Preencher a tela com uma cor (preto)
