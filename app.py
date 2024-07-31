@@ -53,7 +53,6 @@ while game_is_running:
 	if game_time > 8000*ciclo_desaparecer:
 		aparicao_municao = False
 		ciclo_desaparecer += 1
-		print('a')
 
 	if aparicao_municao:
 		municao.update(screen)
