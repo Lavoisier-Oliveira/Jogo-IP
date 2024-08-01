@@ -6,13 +6,13 @@ class Engrenagem:
     def __init__(self ):
         monitor = pygame.display.Info()  # allow to get current widht and height in any monitor
         self.image = pygame.image.load(R".\assets\Collectibles\engrenagem.png")
-        self.size = (monitor.current_w//37, monitor.current_h//12)
+        self.size = (monitor.current_w//30, monitor.current_h//10)
         self.image = pygame.transform.scale(self.image, (self.size[0],self.size[1]))  # Redimensiona a imagem
         self.rect = self.image.get_rect()
         self.centro_x= random.randint(0, monitor.current_w)
         self.centro_y= random.randint(0, monitor.current_h)
         self.cooldown=5000
-        self.momento_aparicao_engrenagem = pygame.time.get_ticks()
+        self.momento_aparicao_engrenagem = 0
         self.vivo=True
 
     def render(self,display):
@@ -43,6 +43,8 @@ class Engrenagem:
             engrenagem_tela =True
             engrenagem_colisao=False
             engrenagem_vezes+=1
+            self.momento_aparicao_engrenagem = pygame.time.get_ticks()
+            
             
 
         if engrenagem_tela:
