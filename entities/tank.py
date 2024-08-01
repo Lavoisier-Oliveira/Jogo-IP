@@ -112,7 +112,7 @@ class Tank:
         self.weapon_angle = (self.weapon_angle+360)%360
         print(f"WEAPON ANGLE: {self.weapon_angle}")
 
-    def move_tank(self):
+    def move_tank(self):  # todo: tanque deve perder vetor x ou y quando bater em parede ou teto
 
         test_rect = self.rect.copy()  # um rect de teste simulará o movimento do input, e então testaremos se houve colisão
 
@@ -146,8 +146,10 @@ class Tank:
 
     def update(self):
         # todo: readinput() = pygame.getpressed -> readhull, readweapon
+
         self.read_hull_input()
         self.read_weapon_input()
+
         if self.v_ang != 0:
             self.angle_weapon()
         if self.vx != 0 or self.vy != 0:

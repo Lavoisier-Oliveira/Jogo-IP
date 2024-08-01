@@ -16,7 +16,7 @@ monitor.current_w, monitor.current_h))  # Resize the background image to fit the
 clock = pygame.time.Clock()
 
 p1 = Tank('A', randint(1, 8), [100, 100], 40, 15, KEYS_PLAYER_1)
-p2 = Tank('B', randint(1, 8), [200, 200], 50, 11, KEYS_PLAYER_2)
+p2 = Tank('B', randint(1, 8), [200, 200], 80, 20, KEYS_PLAYER_2)
 #p3 = Tank('C', randint(1, 8), [300, 300], 60, 10, KEYS_PLAYER_3)
 #p4 = Tank('D', randint(1, 8), [400, 400], 90, 7, KEYS_PLAYER_4)
 
@@ -37,7 +37,9 @@ while game_is_running:
     # Renderizar o jogo
     # screen.fill("black")  # Preencher a tela com uma cor (preto)
     for player in Tank.tanks:
-        screen.blit(player.hull_image, player.rect.topleft)  # Desenhar o tanque na nova posição
+        screen.blit(player.hull_image, player.rect.center)  # Desenhar o tanque na nova posição
+
+        screen.blit(player.weapon_image, player.rect.center)
 
     # Flip the display to put your work on screen
     pygame.display.flip()
