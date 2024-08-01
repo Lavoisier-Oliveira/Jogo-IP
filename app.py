@@ -1,75 +1,82 @@
 import pygame
 import sys
+
 from parameters import *
 from entities.tank import Tank
-from random import randint
-from entities.vida import Engrenagem
-
-# PyGame Setup
-pygame.init()
-monitor = pygame.display.Info()  # allow to get current widht and height in any monitor
-screen = pygame.display.set_mode((monitor.current_w, monitor.current_h))
-pygame.display.set_caption(CAPTION)
-background_image = pygame.image.load(R'assets\backgrounds\back2.jpg')  # Load the background image
-background_image = pygame.transform.scale(background_image, (monitor.current_w, monitor.current_h))  # Resize the background image to fit the screen
-clock = pygame.time.Clock()
+from entities.engrenagem import Engrenagem
+from screens.tank_selection_screen import TankSelectionScreen
+from screens.game_screen import GameScreen
 
 pygame.font.init()
-font_padrao=pygame.font.get_default_font()
-fonte_vida=pygame.font.SysFont(font_padrao,35)
-vidap1=20
-vidap2=20
+vidap1=0
+vidap2=0
 
+lista_engrenagem=[]
+engrenagem_vezes,engrenagem_tela,engrenagem_colisao=1,False, False
+momento_aparicao_engrenagem = 0
+cooldown=5000
 
-engrenagem = Engrenagem(monitor.current_w, monitor.current_h)
-engrenagem_vezes=1
+start_time=0
 
-p1 = Tank('A', randint(1, 10), [100, 100], 40, 15, KEYS_PLAYER_1)
-p2 = Tank('B', randint(1, 10), [200, 200], 50, 11, KEYS_PLAYER_2)
-p3 = Tank('C', randint(1, 10), [300, 300], 60, 10, KEYS_PLAYER_3)
-p4 = Tank('D', randint(1, 10), [400, 400], 90, 7, KEYS_PLAYER_4)
+pygame.mixer.music.set_volume(0.2)
+musica_de_fundo=pygame.mixer.music.load(R"audio\fundo.mp3")
+pygame.mixer.music.play(-1)
+baruluho_colisao_engrenagem=pygame.mixer.Sound(R"audio\colisao_engrenagem,.wav")
+baruluho_colisao_engrenagem.set_volume(1)
+
+# PyGame Setup
+screen = pygame.display.set_mode(SCREEN_SIZE)
+clock = pygame.time.Clock()
+
+tank_selection_screen = TankSelectionScreen()
+game_screen = GameScreen()
+current_screen = tank_selection_screen
 
 game_is_running = True
 while game_is_running:
 	game_time = pygame.time.get_ticks()
 	# Poll for events
 	for event in pygame.event.get():
-		if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):  # para sair, pressione o X da janela ou ESC
+		# para sair, pressione o X da janela ou ESC
+		if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
 			game_is_running = False
+		else:
+			current_screen.handle_event(event)
 	
-	screen.blit(background_image, (0, 0))  # Desenhar o background
+	current_screen.draw(screen)
 
-	vida1=fonte_vida.render(f"PLAYER 1 : {vidap1}",1,(255,255,255))
-	vida2=fonte_vida.render(f"PLAYER 2 : {vidap2}",1,(255,255,255))
-	screen.blit(vida1,(50,50))
-	screen.blit(vida2,(monitor.current_w-230,50))
-
-	# Atualizar o estado do tanque
-	for player in Tank.tanks:
-		player.update()
-
-
-	if game_time > 10000*engrenagem_vezes:
-		engrenagem.render(screen)
-		engrenagem_vezes += 1
-		engrenagem_colisao=False
-		aparicao_engrenagem = pygame.time.get_ticks()
-		cooldown=5000
+	if tank_selection_screen.start_game:
 		
-	###se tiver colisão entre os players e a engrenagem=vida e se vida palyer for menor que 20
-	
+		# Inicializa os tanques
+		
+		p1 = Tank(tank_selection_screen.tank_player1[0], tank_selection_screen.tank_player1[1], [100, 100], 50, 15, KEYS_PLAYER_1)
+		p2 = Tank(tank_selection_screen.tank_player2[0], tank_selection_screen.tank_player2[1], [400, 400], 50, 15, KEYS_PLAYER_2)
+		current_screen = game_screen
 
-	#se passar 5 segundos e ninguem pegar a engrenagem
-	if ((pygame.time.get_ticks() - aparicao_engrenagem >=cooldown)and engrenagem_colisao==False):
-		engrenagem.death(self)
-	# Renderizar o jogo
-	# screen.fill("black")  # Preencher a tela com uma cor (preto)
+	if current_screen == game_screen:
+		if len(lista_engrenagem)!=0 and lista_engrenagem[0].vivo==False:
+				lista_engrenagem.pop()
+
+		if len(lista_engrenagem)==0:
+			lista_engrenagem.append(Engrenagem())
+
+		info_engrenagem=lista_engrenagem[0].colisao_engrenagem(screen,game_time,engrenagem_vezes,engrenagem_tela, engrenagem_colisao,p1,p2,vidap1,vidap2,momento_aparicao_engrenagem,baruluho_colisao_engrenagem)
+		engrenagem_vezes,engrenagem_tela,engrenagem_colisao,vidap1, vidap2, momento_aparicao_engrenagem=info_engrenagem[0],info_engrenagem[1], info_engrenagem[2], info_engrenagem[3], info_engrenagem[4], info_engrenagem[5]
+
+		
 	for player in Tank.tanks:
-		screen.blit(player.image, player.rect.topleft)  # Desenhar o tanque na nova posição
+		screen.blit(player.image, player.rect.topleft)
 
-	# Flip the display to put your work on screen
+		tank_selection_screen.start_game = False
+		start_time= pygame.time.get_ticks()
+		
+
+
+	
+            
+
+	
 	pygame.display.flip()
 	clock.tick(FPS)
-
 pygame.quit()
 sys.exit()
