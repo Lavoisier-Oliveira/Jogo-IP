@@ -70,11 +70,6 @@ while game_is_running:
 		tank_selection_screen.start_game = False
 		start_time= pygame.time.get_ticks()
 		
-
-
-	
-            
-
 	
 	pygame.display.flip()
 	clock.tick(FPS)
