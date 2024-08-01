@@ -24,14 +24,20 @@ class Tank:
         self.weapon_keys = keys[1]
 
         self.size = size
-        self.image = pygame.image.load(f"assets/Hulls_Color_{color}/Hull_0{model}.png")  # Carrega a imagem do tanque
-        self.image = pygame.transform.scale(self.image, (self.size, self.size)).convert_alpha()  # Redimensiona a imagem do tanque e tranforma num formato mais versatil para o pygame operar
-        self.original_image = self.image.copy()  # Guarda a imagem original para futuras rotações
-        self.rect = self.image.get_rect(center=initial_pos)
+
+        self.hull_image = pygame.image.load(f"assets/Hulls_Color_{color}/Hull_0{model}.png")  # Carrega a imagem do tanque
+        self.hull_image = pygame.transform.scale(self.hull_image, (self.size, self.size)).convert_alpha()  # Redimensiona a imagem do tanque e tranforma num formato mais versatil para o pygame operar
+        self.hull_original_image = self.hull_image.copy()  # Guarda a imagem original para futuras rotações
+
+        self.weapon_image = pygame.image.load(f"assets/Weapon_Color_{color}_256X256/Gun_0{model}.png")
+        self.weapon_image = pygame.transform.scale(self.weapon_image, (self.size, self.size)).convert_alpha()  # Redimensiona a imagem do tanque e tranforma num formato mais versatil para o pygame operar
+        self.weapon_original_image = self.weapon_image.copy()  # Guarda a imagem original para futuras rotações
+
+        self.rect = self.hull_image.get_rect(center=initial_pos)
 
         self.speed = speed  # pixels percorridos por tick
-        self.aceleracao = self.k / ((self.speed * (self.size ** 2)) ** 0.5)  # formula empirica (saí testando e ficou top)
-        self.desaceleracao = self.aceleracao  # isso permite configurar valores diferentes para ac. e desac., caso necessario no futuro
+        self.acceleration = self.k / ((self.speed * (self.size ** 2)) ** 0.5)  # formula empirica (saí testando e ficou top)
+        self.deceleration = self.acceleration  # isso permite configurar valores diferentes para ac. e desac., caso necessario no futuro
 
         Tank.tanks.append(self)
 
@@ -44,50 +50,67 @@ class Tank:
         if left_key ^ right_key:  # acelera
             # todo: implementar caso o tank acelere para o sentido oposto ao deslocamento, sua velocidade deve diminuir 2x mais rapido do que o faria caso estivesse apenas dissipando
             if right_key:
-                self.vx = self.vx + self.aceleracao if self.vx + self.aceleracao <= self.speed else self.speed
+                self.vx = self.vx + self.acceleration if self.vx + self.acceleration <= self.speed else self.speed
             elif left_key:
-                self.vx = self.vx - self.aceleracao if self.vx - self.aceleracao >= -self.speed else -self.speed
+                self.vx = self.vx - self.acceleration if self.vx - self.acceleration >= -self.speed else -self.speed
         else:  # desacelera
             if self.vx < 0:
-                self.vx = self.vx + self.desaceleracao if self.vx < -self.desaceleracao else 0
+                self.vx = self.vx + self.deceleration if self.vx < -self.deceleration else 0
             elif self.vx > 0:
-                self.vx = self.vx - self.desaceleracao if self.vx > self.desaceleracao else 0
+                self.vx = self.vx - self.deceleration if self.vx > self.deceleration else 0
         # Y axis
         if up_key ^ down_key:  # acelera
             if up_key:
-                self.vy = self.vy - self.aceleracao if self.vy - self.aceleracao >= -self.speed else -self.speed
+                self.vy = self.vy - self.acceleration if self.vy - self.acceleration >= -self.speed else -self.speed
             elif down_key:
-                self.vy = self.vy + self.aceleracao if self.vy + self.aceleracao <= self.speed else self.speed
+                self.vy = self.vy + self.acceleration if self.vy + self.acceleration <= self.speed else self.speed
         else:  # desacelera
             if self.vy < 0:
-                self.vy = self.vy + self.desaceleracao if self.vy < -self.desaceleracao else 0
+                self.vy = self.vy + self.deceleration if self.vy < -self.deceleration else 0
             elif self.vy > 0:
-                self.vy = self.vy - self.desaceleracao if self.vy > self.desaceleracao else 0
+                self.vy = self.vy - self.deceleration if self.vy > self.deceleration else 0
 
         # calibrar vetores x e y quando o resultante ultrapassa o limite(self.speed)
         if (self.vx**2 + self.vy**2)**0.5 > self.speed:
             if self.vx >= self.speed/(2**0.5):
-                self.vx -= self.desaceleracao
+                self.vx -= self.deceleration
             elif self.vx <= -self.speed/(2**0.5):
-                self.vx += self.desaceleracao
+                self.vx += self.deceleration
             if self.vy >= self.speed/(2**0.5):
-                self.vy -= self.desaceleracao
+                self.vy -= self.deceleration
             elif self.vy <= -self.speed / (2 ** 0.5):
-                self.vy += self.desaceleracao
+                self.vy += self.deceleration
 
     def angle_hull(self):
         self.hull_angle = math.degrees(math.atan2(-self.vy, self.vx)) - 90
         # Preserve the center position while rotating
-        self.image = pygame.transform.rotate(self.original_image, self.hull_angle)
-        self.rect = self.image.get_rect(center=self.rect.center)  # Atualiza o retângulo da imagem com o centro preservado
+        self.hull_image = pygame.transform.rotate(self.hull_original_image, self.hull_angle)
+        self.rect = self.hull_image.get_rect(center=self.rect.center)  # Atualiza o retângulo da imagem com o centro preservado
 
     def read_weapon_input(self):
 
         keys = pygame.key.get_pressed()
         left_key, up_key, down_key, right_key = keys[self.weapon_keys[0]], keys[self.weapon_keys[1]], keys[self.weapon_keys[2]], keys[self.weapon_keys[3]]
-        input_angle = math.degrees(math.atan2(right_key-left_key, right_key-left_key))
 
+        input_angle = math.degrees(math.atan2(right_key-left_key, up_key-down_key))
 
+        input_angle = (input_angle+360)%360
+
+        if input_angle > self.weapon_angle:
+            if input_angle-self.weapon_angle < 360-(input_angle-self.weapon_angle):
+                self.v_ang = -self.speed
+            else:
+                self.v_ang = self.speed
+        else:
+            if self.weapon_angle-input_angle < 360 - (self.weapon_angle - input_angle):
+                self.v_ang = self.speed
+            else:
+                self.v_ang = -self.speed
+
+    def angle_weapon(self):
+        self.weapon_angle += self.v_ang
+        self.weapon_angle = (self.weapon_angle+360)%360
+        print(f"WEAPON ANGLE: {self.weapon_angle}")
 
     def move_tank(self):
 
@@ -124,6 +147,9 @@ class Tank:
     def update(self):
         # todo: readinput() = pygame.getpressed -> readhull, readweapon
         self.read_hull_input()
+        self.read_weapon_input()
+        if self.v_ang != 0:
+            self.angle_weapon()
         if self.vx != 0 or self.vy != 0:
             self.move_tank()
             self.angle_hull()
