@@ -4,12 +4,15 @@ from parameters import *
 
 class Flag:
 	def __init__(self):
+		monitor = pygame.display.Info()
 		self.position = SCREEN_SIZE
 		self.image = [pygame.image.load('assets/Collectibles/bandeira.png'), pygame.image.load('assets/Collectibles/bandeira_azul.png')]
 		self.size = (SCREEN_WIDTH//37, SCREEN_HEIGHT//12)
 		self.image[0], self.image[1] = pygame.transform.scale(self.image[0], (self.size[0], self.size[1])), pygame.transform.scale(self.image[1], (self.size[0], self.size[1])) 
 		self.current_position = [0, 0]
-
+		self.renderx = uniform(monitor.current_w*0.1, monitor.current_w*0.9)
+		self.rendery = uniform(monitor.current_h*0.1, monitor.current_h*0.9)
+	
 	# Função que retorna o próprio retângulo da bandeira
 	def rect_self(self, flag_in_map):
 		if flag_in_map:
@@ -19,7 +22,7 @@ class Flag:
 
 	# Função que renderiza a imagem de uma bandeira em um local aleatório do display
 	def render(self, display):
-		self.current_position[0], self.current_position[1] = uniform(80, self.position[0] - 80), uniform(80, self.position[1] - 80)
+		self.current_position[0], self.current_position[1] = self.renderx, self.rendery
 		display.blit(self.image[0], (self.current_position[0], self.current_position[1]))
 
 	# Função que guarda a posição atual da bandeira, e continua renderizando a bandeira na tela
@@ -29,11 +32,11 @@ class Flag:
 	# Função para gerar no background do jogo a contagem das bandeiras
 	def score_tab(self, score1, score2, display):
 		font = pygame.font.Font(None, 48)
-		score_tab1 = font.render(f': {score1}', True, (0, 0, 0))
 		display.blit(self.image[0], (SCREEN_WIDTH*0.01, SCREEN_HEIGHT*0.9))
-		display.blit(score_tab1, (SCREEN_WIDTH*0.036, SCREEN_HEIGHT*0.93))
-		score_tab2 = font.render(f': {score2}', True, (0, 0, 0))
 		display.blit(self.image[1], (SCREEN_WIDTH*0.904, SCREEN_HEIGHT*0.9))
+		score_tab1 = font.render(f': {score1}', True, (0, 0, 0))
+		score_tab2 = font.render(f': {score2}', True, (0, 0, 0))
+		display.blit(score_tab1, (SCREEN_WIDTH*0.036, SCREEN_HEIGHT*0.93))
 		display.blit(score_tab2, (SCREEN_WIDTH*0.93, SCREEN_HEIGHT*0.93))
 
 	def generate_flag(self, game_time, display,flag_gen, flag_del, flag_in_map, flag_taken):
