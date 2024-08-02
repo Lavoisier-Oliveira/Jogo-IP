@@ -10,10 +10,9 @@ class Tiro():
         self.imagem[0], self.imagem[1] = pygame.transform.scale(self.imagem[0],(self.size[0], self.size[1])), pygame.transform.scale(self.iamgem[1], (self.size[0], self.size[1]))
         self.currente_position = [0, 0]
 
-    # Função que renderiza a imagem da munição a partir da posição em que o tanque está
+    # Função que renderiza o tiro na tela
     def render(self, display):
-        self.posicao_do_tanque_atual[0], self.posicao_do_tanque_atual[1] = (80, self.posicao_do_tanque[0] - 80), (80, self.posicao_do_tanque[1] - 80)
-        display.blit(self.imagem, (self.posicao_do_tanque_atual[0], self.posicao_do_tanque_atual[1]))
+        display.blit(self.imagem, self.rect)
 
     # Função que guarda a posição atual da munição, e continua renderizando ela na tela
     def update(self, display):
