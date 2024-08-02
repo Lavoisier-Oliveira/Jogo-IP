@@ -59,7 +59,6 @@ class Engrenagem:
             engrenagem_tela=False
             barulho_colisao_engrenagem.play()
             
-
         elif p2.rect.colliderect(self.cria()):
             if vidap2<20:
                 vidap2 += 5
@@ -69,13 +68,9 @@ class Engrenagem:
             barulho_colisao_engrenagem.play()
 
         #se passar 5 segundos e ninguem pegar a engrenagem
-        if ((pygame.time.get_ticks() - self.momento_aparicao_engrenagem >=self.cooldown)and (engrenagem_colisao==False)) :
+        if (self.momento_aparicao_engrenagem >=self.cooldown)and (engrenagem_colisao==False)) :
             self.death()
             
         return(engrenagem_vezes,engrenagem_tela, engrenagem_colisao,vidap1,vidap2,self.momento_aparicao_engrenagem)
             
-        
-
-        if len(lista_engrenagem)==0:
-            lista_engrenagem.append(engrenagem = Engrenagem())
            
