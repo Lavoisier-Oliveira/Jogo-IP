@@ -1,6 +1,5 @@
 import pygame
 import sys
-
 from parameters import *
 from entities.tank import Tank
 from entities.flags import Flag
@@ -8,91 +7,104 @@ from random import randint
 from screens.tank_selection_screen import TankSelectionScreen
 from screens.game_screen import GameScreen
 from entities.engrenagem import Engrenagem
-from screens.tank_selection_screen import TankSelectionScreen
-from screens.game_screen import GameScreen
 from entities.municao import Municao
 
 pygame.font.init()
-vidap1=0
-vidap2=0
-
-lista_engrenagem=[]
-engrenagem_vezes,engrenagem_tela,engrenagem_colisao=1, False, False
-momento_aparicao_engrenagem = 0
-cooldown=5000
-flag_cycle, del_flag_time, flag_in_map, flag_taken = 1, 1, False, False
-municao_aparecer, municao_desaparecer, municao_na_tela = 1, 1, False
-
-start_time=0
-
-pygame.mixer.music.set_volume(0.2)
-musica_de_fundo=pygame.mixer.music.load(R"audio\fundo.mp3")
-pygame.mixer.music.play(-1)
-barulho_colisao_engrenagem=pygame.mixer.Sound(R"audio\colisao_engrenagem,.wav")
-barulho_colisao_flag=pygame.mixer.Sound(R"audio\smb_coin.wav")
-barulho_colisao_municao=pygame.mixer.Sound(R"audio\smb_powerup.wav")
-barulho_colisao_engrenagem.set_volume(1)
-barulho_colisao_flag.set_volume(0.2)
-barulho_colisao_municao.set_volume(0.2)
 
 # PyGame Setup
 screen = pygame.display.set_mode(SCREEN_SIZE)
 clock = pygame.time.Clock()
 
-score_p1, score_p2 = 0, 0
-municao_p1, municao_p2 = 20, 20
-
 tank_selection_screen = TankSelectionScreen()
 game_screen = GameScreen()
-current_screen = tank_selection_screen
-flag = Flag()
-municao = Municao()
 
+
+dict_collectibles = {
+	'engrenagem': [],
+	'municao': [],
+	'bandeira': []
+}
+last_spawn_time = {
+	'engrenagem': 0,
+	'municao': 0,
+	'bandeira': 0
+}
+collectible_generation_time = { 
+	'engrenagem': GEAR_GEN_TIME,
+	'municao': AMMO_GEN_TIME,
+	'bandeira': FLAG_GEN_TIME
+}
+
+current_screen = tank_selection_screen
 game_is_running = True
+
 while game_is_running:
 	game_time = pygame.time.get_ticks()
+	
 	# Poll for events
 	for event in pygame.event.get():
-		# para sair, pressione o X da janela ou ESC
 		if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
 			game_is_running = False
 		else:
 			current_screen.handle_event(event)
-	
+
 	current_screen.draw(screen)
 
 	if tank_selection_screen.start_game:
-		
 		# Inicializa os tanques
-		p1 = Tank(tank_selection_screen.tank_player1[0], tank_selection_screen.tank_player1[1], [100, 100], 50, 15, KEYS_PLAYER_1)
-		p2 = Tank(tank_selection_screen.tank_player2[0], tank_selection_screen.tank_player2[1], [400, 400], 50, 15, KEYS_PLAYER_2)
+		player1 = Tank(tank_selection_screen.tank_player1[0],
+					   tank_selection_screen.tank_player1[1],
+					   [100, 100], 50, 15, KEYS_PLAYER_1)
+		player2 = Tank(tank_selection_screen.tank_player2[0],
+					   tank_selection_screen.tank_player2[1],
+					   [400, 400], 50, 15, KEYS_PLAYER_2)
+
 		current_screen = game_screen
-	
 		tank_selection_screen.start_game = False
-		
+
 	if current_screen == game_screen:
-		flag_res = flag.flag_instance(screen, game_time, flag_cycle, del_flag_time, flag_in_map, flag_taken, p1, p2, score_p1, score_p2, barulho_colisao_flag)
-		score_p1, score_p2, flag_cycle, del_flag_time, flag_in_map, flag_taken = flag_res[0], flag_res[1], flag_res[2], flag_res[3], flag_res[4], flag_res[5]
-		municao_res = municao.collisao_municao(screen, game_time, municao_aparecer, municao_desaparecer, municao_na_tela, p1, p2, municao_p1, municao_p2, barulho_colisao_municao)
-		municao_p1, municao_p2, municao_aparecer, municao_desaparecer, municao_na_tela = municao_res[0], municao_res[1], municao_res[2], municao_res[3], municao_res[4]
-		if len(lista_engrenagem)!=0 and lista_engrenagem[0].vivo==False:
-				lista_engrenagem.pop()
 
-		if len(lista_engrenagem)==0:
-			lista_engrenagem.append(Engrenagem())
+		for collectible_type, last_time in last_spawn_time.items():
+			if game_time - last_time >= collectible_generation_time[collectible_type]:
+				if collectible_type == 'engrenagem':
+					collectible = Engrenagem()
+				elif collectible_type == 'municao':
+					collectible = Municao()
+				elif collectible_type == 'bandeira':
+					collectible = Flag()
+				collectible.add_collectible_to_dict(dict_collectibles)
+				last_spawn_time[collectible_type] = game_time
 
-		info_engrenagem=lista_engrenagem[0].colisao_engrenagem(screen,game_time,engrenagem_vezes,engrenagem_tela, engrenagem_colisao,p1,p2,vidap1,vidap2,momento_aparicao_engrenagem,barulho_colisao_engrenagem)
-		engrenagem_vezes,engrenagem_tela,engrenagem_colisao,vidap1, vidap2, momento_aparicao_engrenagem=info_engrenagem[0],info_engrenagem[1], info_engrenagem[2], info_engrenagem[3], info_engrenagem[4], info_engrenagem[5]
+		for collectible_list in dict_collectibles.values():
+			for collectible in collectible_list.copy():  # Iterate over a copy of the list
+				collectible.main(screen, player1, player2, game_time, dict_collectibles)
 
-		
-	for player in Tank.tanks:
-		screen.blit(player.image, player.rect.topleft)
+		# Renderizar tanques
+		for player in Tank.tanks:
+			screen.blit(player.image, player.rect.topleft)
 
-		tank_selection_screen.start_game = False
-		start_time= pygame.time.get_ticks()
-		
-	
+		# Mostrar na tela a quantidade de engrenagens coletadas por jogador
+		screen.blit(FONT_GEAR.render(f"PLAYER 1 : {player1.gears}", 1, WHITE_COLOR), (50, 50))
+		screen.blit(FONT_GEAR.render(f"PLAYER 2 : {player2.gears}", 1, WHITE_COLOR), (SCREEN_WIDTH - 230, 50))
+
+		# Mostrar na tela as imagens das bandeiras
+		screen.blit(RED_FLAG_IMAGE, (SCREEN_WIDTH * 0.01, SCREEN_HEIGHT * 0.9))
+		screen.blit(BLUE_FLAG_IMAGE, (SCREEN_WIDTH * 0.9, SCREEN_HEIGHT * 0.9))
+
+		# Mostrar na tela a quantidade de bandeiras coletadas por jogador
+		screen.blit(AMMO_IMAGE, (SCREEN_WIDTH*0.07, SCREEN_HEIGHT*0.9))
+		screen.blit(AMMO_IMAGE, (SCREEN_WIDTH*0.82, SCREEN_HEIGHT*0.9))
+
+		# Mostrar na tela a quantidade de bandeiras coletadas de cada jogador
+		screen.blit(FONT_48.render(f': {player1.flags}', True, BLACK_COLOR), (SCREEN_WIDTH * 0.036, SCREEN_HEIGHT * 0.93))
+		screen.blit(FONT_48.render(f': {player2.flags}', True, BLACK_COLOR), (SCREEN_WIDTH * 0.93, SCREEN_HEIGHT * 0.93))
+
+		# Mostrar na tela a quantidade de munição de cada jogador
+		screen.blit(FONT_48.render(f': {player1.ammo}', True, BLACK_COLOR), (SCREEN_WIDTH*0.1, SCREEN_HEIGHT*0.93))
+		screen.blit(FONT_48.render(f': {player2.ammo}', True, BLACK_COLOR), (SCREEN_WIDTH*0.85, SCREEN_HEIGHT*0.93))
+
 	pygame.display.flip()
 	clock.tick(FPS)
+
 pygame.quit()
 sys.exit()
