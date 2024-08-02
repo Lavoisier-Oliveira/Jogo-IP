@@ -5,8 +5,8 @@ from parameters import *
 from entities.tank import Tank
 from entities.flags import Flag
 from random import randint
-from tank_selection_screen import TankSelectionScreen
-from game_screen import GameScreen
+from screens.tank_selection_screen import TankSelectionScreen
+from screens.game_screen import GameScreen
 
 # PyGame Setup
 screen = pygame.display.set_mode(SCREEN_SIZE)
@@ -37,8 +37,8 @@ while game_is_running:
 	if tank_selection_screen.start_game:
 		
 		# Inicializa os tanques
-		p1 = Tank(tank_selection_screen.color, tank_selection_screen.model, [100, 100], 90,  7, KEYS_PLAYER_1)
-		p2 = Tank('B', randint(1, 8), [200, 200], 50, 11, KEYS_PLAYER_2)
+		p1 = Tank(tank_selection_screen.tank_player1[0], tank_selection_screen.tank_player1[1], [100, 100], 50, 15, KEYS_PLAYER_1)
+		p2 = Tank(tank_selection_screen.tank_player2[0], tank_selection_screen.tank_player2[1], [400, 400], 50, 15, KEYS_PLAYER_2)
 		current_screen = game_screen
 
 	# Renderizar o jogo
