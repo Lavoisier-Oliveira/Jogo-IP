@@ -10,6 +10,13 @@ class Flag:
 		self.image[0], self.image[1] = pygame.transform.scale(self.image[0], (self.size[0], self.size[1])), pygame.transform.scale(self.image[1], (self.size[0], self.size[1])) 
 		self.current_position = [0, 0]
 
+	# Função que retorna o próprio retângulo da bandeira
+	def rect_self(self, flag_in_map):
+		if flag_in_map:
+			return pygame.Rect(self.current_position[0], self.current_position[1], self.size[0], self.size[1])
+		else:
+			return pygame.Rect(9999999, 99999999, self.size[0], self.size[1])
+
 	# Função que renderiza a imagem de uma bandeira em um local aleatório do display
 	def render(self, display):
 		self.current_position[0], self.current_position[1] = uniform(80, self.position[0] - 80), uniform(80, self.position[1] - 80)
@@ -19,7 +26,8 @@ class Flag:
 	def update(self, display):
 		display.blit(self.image[0], (self.current_position[0], self.current_position[1]))
 
-	def collision_flag(self, display, game_time, flag_gen, flag_del, flag_in_map, flag_taken, player1, player2, score1, score2):
+	# Função para gerar no background do jogo a contagem das bandeiras
+	def score_tab(self, score1, score2, display):
 		font = pygame.font.Font(None, 48)
 		score_tab1 = font.render(f': {score1}', True, (0, 0, 0))
 		display.blit(self.image[0], (SCREEN_WIDTH*0.01, SCREEN_HEIGHT*0.9))
@@ -28,6 +36,7 @@ class Flag:
 		display.blit(self.image[1], (SCREEN_WIDTH*0.904, SCREEN_HEIGHT*0.9))
 		display.blit(score_tab2, (SCREEN_WIDTH*0.93, SCREEN_HEIGHT*0.93))
 
+	def generate_flag(self, game_time, display,flag_gen, flag_del, flag_in_map, flag_taken):
 		# Gerando uma bandeira em um local aleatório no intervalo de 7 segundos
 		if game_time > 7000*flag_gen and game_time < 10000*flag_gen:
 			self.render(display) # Função da classe Flag para renderizar a flag em um local aleatório
@@ -39,7 +48,10 @@ class Flag:
 			flag_del += 1
 		if flag_in_map:
 			self.update(display)	# Função para sempre renderizar a bandeira na tela
-		
+		return (game_time, flag_gen, flag_del, flag_in_map, flag_taken)
+	
+	# Função que realiza a checagem da colisão do player com a bandeira
+	def collision_flag(self, player1, player2, score1, score2, flag_in_map, flag_taken):
 		if player1.rect.colliderect(self.rect_self(flag_in_map)):
 			if not flag_taken:
 				score1 += 1
@@ -48,10 +60,14 @@ class Flag:
 			if not flag_taken:
 				score2 += 1
 			flag_in_map, flag_taken = False, True
+		return (score1, score2, flag_in_map, flag_taken)
+	
+	# Função que instancia todos as outras funções utilizadas na geração das bandeiras
+	def flag_instance(self, display, game_time, flag_gen, flag_del, flag_in_map, flag_taken, player1, player2, score1, score2):
+		self.score_tab(score1, score2, display)
+		gen_flag = self.generate_flag(game_time, display, flag_gen, flag_del, flag_in_map, flag_taken)
+		game_time, flag_gen, flag_del, flag_in_map, flag_taken = gen_flag[0], gen_flag[1], gen_flag[2], gen_flag[3], gen_flag[4]
+		collision = self.collision_flag(player1, player2, score1, score2, flag_in_map, flag_taken)
+		score1, score2, flag_in_map, flag_taken = collision[0], collision[1], collision[2], collision[3]
 		return (score1, score2, flag_gen, flag_del, flag_in_map, flag_taken)
-	# Função que retorna o próprio retângulo da bandeira
-	def rect_self(self, flag_in_map):
-		if flag_in_map:
-			return pygame.Rect(self.current_position[0], self.current_position[1], self.size[0], self.size[1])
-		else:
-			return pygame.Rect(9999999, 99999999, self.size[0], self.size[1])
+	

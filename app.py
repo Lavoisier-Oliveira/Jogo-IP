@@ -48,8 +48,9 @@ while game_is_running:
 
 	# Flip the display to put your work on screen
 		tank_selection_screen.start_game = False
-		flag_res = flag.collision_flag(screen, game_time, flag_cycle, del_flag_time, flag_p, flag_taken, p1, p2, score_p1, score_p2)
-		score_p1, score_p2, flag_cycle, del_flag_time, flag_p, flag_taken = flag_res[0], flag_res[1], flag_res[2], flag_res[3], flag_res[4], flag_res[5];
+		
+		flag_res = flag.flag_instance(screen, game_time, flag_cycle, del_flag_time, flag_p, flag_taken, p1, p2, score_p1, score_p2)
+		score_p1, score_p2, flag_cycle, del_flag_time, flag_p, flag_taken = flag_res[0], flag_res[1], flag_res[2], flag_res[3], flag_res[4], flag_res[5]
 	pygame.display.flip()
 	clock.tick(FPS)
 
