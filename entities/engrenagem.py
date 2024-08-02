@@ -28,7 +28,7 @@ class Engrenagem:
     def update(self, display): 
         display.blit(self.image, (self.centro_x, self.centro_y))
 
-    def colisao_engrenagem(self,screen,start_time,engrenagem_vezes,engrenagem_tela, engrenagem_colisao,p1,p2,vidap1,vidap2,momento_aparicao_engrenagem,baruluho_colisao_engrenagem):
+    def colisao_engrenagem(self,screen,start_time,engrenagem_vezes,engrenagem_tela, engrenagem_colisao,p1,p2,vidap1,vidap2,momento_aparicao_engrenagem,barulho_colisao_engrenagem):
         monitor = pygame.display.Info()  # allow to get current widht and height in any monitor
         font_padrao=pygame.font.get_default_font()
         fonte_vida=pygame.font.SysFont(font_padrao,35)
@@ -57,7 +57,7 @@ class Engrenagem:
             engrenagem_colisao=True
             self.death()
             engrenagem_tela=False
-            baruluho_colisao_engrenagem.play()
+            barulho_colisao_engrenagem.play()
             
 
         elif p2.rect.colliderect(self.cria()):
@@ -66,7 +66,7 @@ class Engrenagem:
             engrenagem_colisao=True
             self.death()
             engrenagem_tela+False
-            baruluho_colisao_engrenagem.play()
+            barulho_colisao_engrenagem.play()
 
         #se passar 5 segundos e ninguem pegar a engrenagem
         if ((pygame.time.get_ticks() - self.momento_aparicao_engrenagem >=self.cooldown)and (engrenagem_colisao==False)) :

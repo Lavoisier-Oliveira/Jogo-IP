@@ -52,23 +52,25 @@ class Flag:
 		return (game_time, flag_gen, flag_del, flag_in_map, flag_taken)
 	
 	# Função que realiza a checagem da colisão do player com a bandeira
-	def collision_flag(self, player1, player2, score1, score2, flag_in_map, flag_taken):
+	def collision_flag(self, player1, player2, score1, score2, flag_in_map, flag_taken, barulho_colisao_flag):
 		if player1.rect.colliderect(self.rect_self(flag_in_map)):
 			if not flag_taken:
 				score1 += 1
 			flag_in_map, flag_taken = False, True
+			barulho_colisao_flag.play()
 		elif player2.rect.colliderect(self.rect_self(flag_in_map)):
 			if not flag_taken:
 				score2 += 1
 			flag_in_map, flag_taken = False, True
+			barulho_colisao_flag.play()
 		return (score1, score2, flag_in_map, flag_taken)
 	
 	# Função que instancia todos as outras funções utilizadas na geração das bandeiras
-	def flag_instance(self, display, game_time, flag_gen, flag_del, flag_in_map, flag_taken, player1, player2, score1, score2):
+	def flag_instance(self, display, game_time, flag_gen, flag_del, flag_in_map, flag_taken, player1, player2, score1, score2, barulho_colicao_flag):
 		self.score_tab(score1, score2, display)
 		gen_flag = self.generate_flag(game_time, display, flag_gen, flag_del, flag_in_map, flag_taken)
 		game_time, flag_gen, flag_del, flag_in_map, flag_taken = gen_flag[0], gen_flag[1], gen_flag[2], gen_flag[3], gen_flag[4]
-		collision = self.collision_flag(player1, player2, score1, score2, flag_in_map, flag_taken)
+		collision = self.collision_flag(player1, player2, score1, score2, flag_in_map, flag_taken, barulho_colicao_flag)
 		score1, score2, flag_in_map, flag_taken = collision[0], collision[1], collision[2], collision[3]
 		return (score1, score2, flag_gen, flag_del, flag_in_map, flag_taken)
 	

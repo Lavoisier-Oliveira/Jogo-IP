@@ -23,7 +23,7 @@ class Municao:
 	def update(self, display):
 		display.blit(self.image, (self.current_position[0], self.current_position[1]))
 
-	def collisao_municao(self, display, game_time, municao_aparecer, municao_desaparecer, municao_na_tela, player1, player2, municao_p1, municao_p2):
+	def collisao_municao(self, display, game_time, municao_aparecer, municao_desaparecer, municao_na_tela, player1, player2, municao_p1, municao_p2, barulho_colisao_municao):
 		font = pygame.font.Font(None, 48)
 		display.blit(self.image, (SCREEN_WIDTH*0.07, SCREEN_HEIGHT*0.9))
 		display.blit(self.image, (SCREEN_WIDTH*0.82, SCREEN_HEIGHT*0.9))
@@ -49,9 +49,11 @@ class Municao:
 				if municao_na_tela and municao_p1 < 21:
 					municao_p1 += 1
 				municao_na_tela = False
+				barulho_colisao_municao.play()
 		elif player2.rect.colliderect(self.rect_self()):
 			if municao_p2 < 21:
 				if municao_na_tela:
 					municao_p2 += 1
 				municao_na_tela = False
+				barulho_colisao_municao.play()
 		return (municao_p1, municao_p2, municao_aparecer, municao_desaparecer, municao_na_tela)
