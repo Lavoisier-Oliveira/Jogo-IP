@@ -6,7 +6,7 @@ class Engrenagem:
     def __init__(self ):
         monitor = pygame.display.Info()  # allow to get current widht and height in any monitor
         self.image = pygame.image.load(R".\assets\Collectibles\engrenagem.png")
-        self.size = (monitor.current_w//30, monitor.current_h//10)
+        self.size = (monitor.current_w//35, monitor.current_h//20)
         self.image = pygame.transform.scale(self.image, (self.size[0],self.size[1]))  # Redimensiona a imagem
         self.rect = self.image.get_rect()
         self.centro_x= random.randint(monitor.current_w//20, monitor.current_w-(monitor.current_w//20))
