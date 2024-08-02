@@ -10,15 +10,18 @@ from screens.game_screen import GameScreen
 from entities.engrenagem import Engrenagem
 from screens.tank_selection_screen import TankSelectionScreen
 from screens.game_screen import GameScreen
+from entities.municao import Municao
 
 pygame.font.init()
 vidap1=0
 vidap2=0
 
 lista_engrenagem=[]
-engrenagem_vezes,engrenagem_tela,engrenagem_colisao=1,False, False
+engrenagem_vezes,engrenagem_tela,engrenagem_colisao=1, False, False
 momento_aparicao_engrenagem = 0
 cooldown=5000
+flag_cycle, del_flag_time, flag_in_map, flag_taken = 1, 1, False, False
+municao_aparecer, municao_desaparecer, municao_na_tela = 1, 1, False
 
 start_time=0
 
@@ -33,12 +36,13 @@ screen = pygame.display.set_mode(SCREEN_SIZE)
 clock = pygame.time.Clock()
 
 score_p1, score_p2 = 0, 0
+municao_p1, municao_p2 = 20, 20
 
 tank_selection_screen = TankSelectionScreen()
 game_screen = GameScreen()
 current_screen = tank_selection_screen
 flag = Flag()
-flag_cycle, del_flag_time, flag_p, flag_taken = 1, 1, False, False # Variavéis para fazer a checagem das condições da bandeira na tela
+municao = Municao()
 
 game_is_running = True
 while game_is_running:
@@ -63,8 +67,10 @@ while game_is_running:
 		tank_selection_screen.start_game = False
 		
 	if current_screen == game_screen:
-		flag_res = flag.flag_instance(screen, game_time, flag_cycle, del_flag_time, flag_p, flag_taken, p1, p2, score_p1, score_p2)
-		score_p1, score_p2, flag_cycle, del_flag_time, flag_p, flag_taken = flag_res[0], flag_res[1], flag_res[2], flag_res[3], flag_res[4], flag_res[5]
+		flag_res = flag.flag_instance(screen, game_time, flag_cycle, del_flag_time, flag_in_map, flag_taken, p1, p2, score_p1, score_p2)
+		score_p1, score_p2, flag_cycle, del_flag_time, flag_in_map, flag_taken = flag_res[0], flag_res[1], flag_res[2], flag_res[3], flag_res[4], flag_res[5]
+		municao_res = municao.collisao_municao(screen, game_time, municao_aparecer, municao_desaparecer, municao_na_tela, p1, p2, municao_p1, municao_p2)
+		municao_p1, municao_p2, municao_aparecer, municao_desaparecer, municao_na_tela = municao_res[0], municao_res[1], municao_res[2], municao_res[3], municao_res[4]
 		if len(lista_engrenagem)!=0 and lista_engrenagem[0].vivo==False:
 				lista_engrenagem.pop()
 

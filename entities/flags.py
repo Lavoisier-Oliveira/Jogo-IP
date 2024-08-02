@@ -1,4 +1,4 @@
-from random import uniform
+import random
 import pygame
 from parameters import *
 
@@ -10,8 +10,6 @@ class Flag:
 		self.size = (SCREEN_WIDTH//37, SCREEN_HEIGHT//12)
 		self.image[0], self.image[1] = pygame.transform.scale(self.image[0], (self.size[0], self.size[1])), pygame.transform.scale(self.image[1], (self.size[0], self.size[1])) 
 		self.current_position = [0, 0]
-		self.renderx = uniform(monitor.current_w*0.1, monitor.current_w*0.9)
-		self.rendery = uniform(monitor.current_h*0.1, monitor.current_h*0.9)
 	
 	# Função que retorna o próprio retângulo da bandeira
 	def rect_self(self, flag_in_map):
@@ -22,7 +20,7 @@ class Flag:
 
 	# Função que renderiza a imagem de uma bandeira em um local aleatório do display
 	def render(self, display):
-		self.current_position[0], self.current_position[1] = self.renderx, self.rendery
+		self.current_position[0], self.current_position[1] = random.uniform(SCREEN_WIDTH*0.1, SCREEN_WIDTH*0.9), random.uniform(SCREEN_HEIGHT*0.1, SCREEN_HEIGHT*0.9)
 		display.blit(self.image[0], (self.current_position[0], self.current_position[1]))
 
 	# Função que guarda a posição atual da bandeira, e continua renderizando a bandeira na tela

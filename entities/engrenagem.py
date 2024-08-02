@@ -9,8 +9,8 @@ class Engrenagem:
         self.size = (monitor.current_w//30, monitor.current_h//10)
         self.image = pygame.transform.scale(self.image, (self.size[0],self.size[1]))  # Redimensiona a imagem
         self.rect = self.image.get_rect()
-        self.centro_x= random.randint(0, monitor.current_w)
-        self.centro_y= random.randint(0, monitor.current_h)
+        self.centro_x= random.randint(monitor.current_w//20, monitor.current_w-(monitor.current_w//20))
+        self.centro_y= random.randint(monitor.current_h//20, monitor.current_h-(monitor.current_h//20))
         self.cooldown=5000
         self.momento_aparicao_engrenagem = 0
         self.vivo=True
