@@ -21,6 +21,7 @@ class Tank:
         self.rect = self.image.get_rect(center=initial_pos)
         self.speed = speed  # pixels percorridos por tick
         self.municao = municao
+        self.qnt_municao = []
         Tank.tanks.append(self)
 
     def read_input(self):
@@ -30,7 +31,7 @@ class Tank:
         desaceleracao = aceleracao
 
         keys = pygame.key.get_pressed()
-        left_key, up_key, down_key, right_key = keys[self.keys[0]], keys[self.keys[1]], keys[self.keys[2]], keys[self.keys[3]]
+        left_key, up_key, down_key, right_key, shoot_key = keys[self.keys[0]], keys[self.keys[1]], keys[self.keys[2]], keys[self.keys[3]], keys[self.keys[4]]
 
         # X axis
         if left_key ^ right_key:  # acelera
@@ -58,6 +59,10 @@ class Tank:
                 self.vy = self.vy + desaceleracao if self.vy < -desaceleracao else 0
             elif self.vy > 0:
                 self.vy = self.vy - desaceleracao if self.vy > desaceleracao else 0
+            
+        '''if shoot_key:
+            if self.municao > 0 and self.municao < 20:
+                self.qnt_municao.append(Municao(self.rect.center, self.size/4))'''
 
         # calibrar vetores x e y quando o resultante ultrapassa o limite(self.speed)
         if (self.vx**2 + self.vy**2)**0.5 > self.speed:
