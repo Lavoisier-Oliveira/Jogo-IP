@@ -1,5 +1,6 @@
 import pygame
 import math
+from entities.tiro import Tiro
 
 pygame.init()
 monitor = pygame.display.Info()
@@ -22,6 +23,7 @@ class Tank:
         self.speed = speed  # pixels percorridos por tick
         self.municao = municao
         self.qnt_municao = []
+        self.atirar = False
         Tank.tanks.append(self)
 
     def read_input(self):
@@ -60,10 +62,11 @@ class Tank:
             elif self.vy > 0:
                 self.vy = self.vy - desaceleracao if self.vy > desaceleracao else 0
             
-        '''if shoot_key:
-            if self.municao > 0 and self.municao < 20:
-                self.qnt_municao.append(Municao(self.rect.center, self.size/4))'''
-
+        if shoot_key:
+            self.municao = Tiro.atirar(self.municao)
+            self.atirar = True
+        else:
+            self.atirar = False
         # calibrar vetores x e y quando o resultante ultrapassa o limite(self.speed)
         if (self.vx**2 + self.vy**2)**0.5 > self.speed:
             if self.vx >= self.speed/(2**0.5):

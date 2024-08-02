@@ -4,6 +4,7 @@ from parameters import *
 from entities.tank import Tank
 from random import randint
 from entities.municao import Municao
+from entities.tiro import Tiro
 
 # PyGame Setup
 pygame.init()
@@ -19,6 +20,8 @@ p2 = Tank('B', 2, [200, 200], 50, 11, KEYS_PLAYER_2, 20)
 municao = Municao()
 ciclo_aparecer, ciclo_desaparecer, aparicao_municao = 1, 1, False
 
+tiro = Tiro()
+
 game_is_running = True
 while game_is_running:
 	font = pygame.font.Font(None, 48)
@@ -33,12 +36,17 @@ while game_is_running:
 	# Atualizar o estado do tanque
 	for player in Tank.tanks:
 		player.update()
+		print(player.atirar)
+		if player.atirar: #condição para a bala aparecer na tela
+			tiro.render(screen, player.rect.center)
 
 	# Renderizar o jogo
 	# screen.fill("black")  # Preencher a tela com uma cor (preto)
 	for player in Tank.tanks:
 		screen.blit(player.image, player.rect.topleft)  # Desenhar o tanque na nova posição
-		
+		tiro.update(player.angle)
+
+
 	municao_interacao = municao.collisao_municao(screen, game_time, ciclo_aparecer, ciclo_desaparecer, aparicao_municao, p1, p2, p1.municao, p2.municao)
 	p1.municao, p2.municao, ciclo_aparecer, ciclo_desaparecer, aparicao_municao = municao_interacao[0], municao_interacao[1], municao_interacao[2], municao_interacao[3], municao_interacao[4]
 	pygame.display.flip()
