@@ -38,7 +38,7 @@ class Engrenagem:
         screen.blit(vida2,(monitor.current_w-230,50))
 
 
-        if start_time > 5000*engrenagem_vezes:
+        if start_time > 10000*engrenagem_vezes:
             self.render(screen)
             engrenagem_tela =True
             engrenagem_colisao=False
