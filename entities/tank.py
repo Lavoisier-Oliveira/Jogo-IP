@@ -1,5 +1,6 @@
 import pygame
 import math
+from entities.projectile import Projectile
 
 pygame.init()
 monitor = pygame.display.Info()
@@ -19,7 +20,7 @@ class Tank:
 		self.original_image = self.image.copy()  # Guarda a imagem original para futuras rotações
 		self.rect = self.image.get_rect(center=initial_pos)
 		self.speed = speed  # pixels percorridos por tick
-
+		self.mask = pygame.mask.from_surface(self.image) # Criando uma nova superfície a partir da imagem do tanque, que realiza a dimensão pixel a pixel
 		self.gears = 5
 		self.ammo = 5
 		self.flags = 0

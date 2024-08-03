@@ -8,6 +8,7 @@ from screens.tank_selection_screen import TankSelectionScreen
 from screens.game_screen import GameScreen
 from entities.engrenagem import Engrenagem
 from entities.municao import Municao
+from entities.projectile import Projectile, main, instance_sprites
 
 pygame.font.init()
 
@@ -44,6 +45,8 @@ while game_is_running:
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
 			game_is_running = False
+		elif event.type == pygame.KEYDOWN and current_screen == game_screen and (event.key == pygame.K_SPACE or event.key == pygame.K_m):
+			main(player1, player2, screen, event.key) # Adicionando os projéteis
 		else:
 			current_screen.handle_event(event)
 
@@ -101,6 +104,9 @@ while game_is_running:
 		# Mostrar na tela a quantidade de munição de cada jogador
 		screen.blit(FONT_48.render(f': {player1.ammo}', True, BLACK_COLOR), (SCREEN_WIDTH*0.1, SCREEN_HEIGHT*0.93))
 		screen.blit(FONT_48.render(f': {player2.ammo}', True, BLACK_COLOR), (SCREEN_WIDTH*0.85, SCREEN_HEIGHT*0.93))
+
+		# Gerando as animações de todos os projéteis e explosões
+		instance_sprites(screen)
 
 	pygame.display.flip()
 	clock.tick(FPS)

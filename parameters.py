@@ -5,6 +5,9 @@ FPS = 60
 KEYS_PLAYER_1 = (pygame.K_a, pygame.K_w, pygame.K_s, pygame.K_d)
 KEYS_PLAYER_2 = (pygame.K_LEFT, pygame.K_UP, pygame.K_DOWN, pygame.K_RIGHT)
 
+PROJECTILE_SPRITES = pygame.sprite.Group()
+EXPLOSION_SPRITES = pygame.sprite.Group()
+
 WHITE_COLOR = (255, 255, 255)
 BLACK_COLOR = (0, 0, 0)
 GREEN_LIGHT_COLOR = (0, 100, 0)
