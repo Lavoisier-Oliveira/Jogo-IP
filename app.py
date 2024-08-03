@@ -18,7 +18,6 @@ clock = pygame.time.Clock()
 tank_selection_screen = TankSelectionScreen()
 game_screen = GameScreen()
 
-
 dict_collectibles = {
 	'engrenagem': [],
 	'municao': [],
