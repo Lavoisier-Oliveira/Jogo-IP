@@ -32,8 +32,8 @@ class Engrenagem:
         monitor = pygame.display.Info()  # allow to get current widht and height in any monitor
         font_padrao=pygame.font.get_default_font()
         fonte_vida=pygame.font.SysFont(font_padrao,35)
-        vida1=fonte_vida.render(f"PLAYER 1 : {vidap1}",1,(255,255,255))
-        vida2=fonte_vida.render(f"PLAYER 2 : {vidap2}",1,(255,255,255))
+        vida1=fonte_vida.render(f"PLAYER 1 : {vidap1}",1,(0,0,0))
+        vida2=fonte_vida.render(f"PLAYER 2 : {vidap2}",1,(0,0,0))
         screen.blit(vida1,(50,50))
         screen.blit(vida2,(monitor.current_w-230,50))
 
