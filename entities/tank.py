@@ -1,6 +1,5 @@
 import pygame
 import math
-from entities.projectile import Projectile
 
 pygame.init()
 monitor = pygame.display.Info()

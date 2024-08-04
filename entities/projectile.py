@@ -6,10 +6,12 @@ from parameters import *
 # Função para definir o player que está realizando o disparo do projétil
 def main(player1, player2, screen, key):
 	if key == pygame.K_SPACE and player1.ammo > 0:
+		PROJECTILE_SOUND.play()
 		projectile = Projectile(player1.rect.centerx, player1.rect.centery, -90-player1.angle, player2, screen)
 		PROJECTILE_SPRITES.add(projectile)
 		player1.ammo -= 1
 	elif key == pygame.K_m and player2.ammo > 0:
+		PROJECTILE_SOUND.play()
 		projectile = Projectile(player2.rect.centerx, player2.rect.centery, -90-player2.angle, player1, screen)
 		PROJECTILE_SPRITES.add(projectile)
 		player2.ammo -= 1
@@ -54,4 +56,5 @@ class Projectile(pygame.sprite.Sprite):
 			self.kill()
 			explosion = Explosion(self.player.rect.centerx, self.player.rect.centery)
 			explosion_sprite.add(explosion)
+			PROJECTILE_COLLISION_SOUND.play()
 			self.player.gears -= 2

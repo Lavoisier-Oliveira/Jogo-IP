@@ -27,6 +27,11 @@ FLAG_COLLISION_SOUND.set_volume(0.2)
 AMMO_COLLISION_SOUND = pygame.mixer.Sound(R"audio/smb_powerup.wav")
 AMMO_COLLISION_SOUND.set_volume(0.2)
 
+PROJECTILE_SOUND = pygame.mixer.Sound(R"audio/pew.mp3")
+PROJECTILE_SOUND.set_volume(0.2)
+PROJECTILE_COLLISION_SOUND = pygame.mixer.Sound(R"audio/kaboom_baby.mp3")
+PROJECTILE_COLLISION_SOUND.set_volume(0.1)
+
 FONT_GEAR = pygame.font.SysFont(pygame.font.get_default_font(), 35)
 FONT_48 = pygame.font.Font(None, 48)
 
