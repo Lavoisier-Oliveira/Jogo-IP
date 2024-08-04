@@ -6,6 +6,7 @@ from entities.flags import Flag
 from random import randint
 from screens.tank_selection_screen import TankSelectionScreen
 from screens.game_screen import GameScreen
+from screens.home_menu_screen import HomeMenuScreen
 from entities.engrenagem import Engrenagem
 from entities.municao import Municao
 
@@ -15,6 +16,7 @@ pygame.font.init()
 screen = pygame.display.set_mode(SCREEN_SIZE)
 clock = pygame.time.Clock()
 
+home_menu_screen = HomeMenuScreen()
 tank_selection_screen = TankSelectionScreen()
 game_screen = GameScreen()
 
@@ -34,7 +36,7 @@ collectible_generation_time = {
 	'bandeira': FLAG_GEN_TIME
 }
 
-current_screen = tank_selection_screen
+current_screen = home_menu_screen
 game_is_running = True
 
 while game_is_running:
@@ -49,7 +51,11 @@ while game_is_running:
 
 	current_screen.draw(screen)
 
-	if tank_selection_screen.start_game:
+	# verifica a transição de telas
+	if current_screen == home_menu_screen and home_menu_screen.start_game:
+		current_screen = tank_selection_screen
+
+	elif current_screen == tank_selection_screen and tank_selection_screen.start_game:
 		# Inicializa os tanques
 		player1 = Tank(tank_selection_screen.tank_player1[0],
 					   tank_selection_screen.tank_player1[1],
