@@ -30,6 +30,6 @@ class HomeMenuScreen:
 
         # coloca "CinEXPLODA" no centro da tela
         title_font = pygame.font.Font(None,74)
-        title_text = title_font.render("CinEXPLODA",True, (255,255,255))
+        title_text = title_font.render("CinXPLODA",True, (255,255,255))
         title_rect = title_text.get_rect(center=(SCREEN_WIDTH // 2, 50))
         screen.blit(title_text, title_rect)
