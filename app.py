@@ -92,8 +92,8 @@ while game_is_running:
 			screen.blit(player.image, player.rect.topleft)
 
 		# Mostrar na tela a quantidade de engrenagens coletadas por jogador
-		screen.blit(FONT_GEAR.render(f"PLAYER 1 : {player1.gears}", 1, WHITE_COLOR), (50, 50))
-		screen.blit(FONT_GEAR.render(f"PLAYER 2 : {player2.gears}", 1, WHITE_COLOR), (SCREEN_WIDTH - 230, 50))
+		screen.blit(FONT_GEAR.render(f"PLAYER 1 : {player1.gears}", 1, BLACK_COLOR), (50, 50))
+		screen.blit(FONT_GEAR.render(f"PLAYER 2 : {player2.gears}", 1, BLACK_COLOR), (SCREEN_WIDTH - 230, 50))
 
 		# Mostrar na tela as imagens das bandeiras
 		screen.blit(RED_FLAG_IMAGE, (SCREEN_WIDTH * 0.01, SCREEN_HEIGHT * 0.9))
