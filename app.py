@@ -62,10 +62,10 @@ while game_is_running:
 		# Inicializa os tanques
 		player1 = Tank(tank_selection_screen.tank_player1[0],
 					   tank_selection_screen.tank_player1[1],
-					   [100, 100], 50, 15, KEYS_PLAYER_1)
+					   [100, 100], 60, 10, KEYS_PLAYER_1)
 		player2 = Tank(tank_selection_screen.tank_player2[0],
 					   tank_selection_screen.tank_player2[1],
-					   [400, 400], 50, 15, KEYS_PLAYER_2)
+					   [400, 400], 60, 10, KEYS_PLAYER_2)
 
 		current_screen = game_screen
 		tank_selection_screen.start_game = False
@@ -113,6 +113,26 @@ while game_is_running:
 
 		# Gerando as animações de todos os projéteis e explosões
 		instance_sprites(screen)
+
+
+		# Checar se algum player morreu ou pegou 8 bandeiras
+		loser = None
+		if player1.flags == 8:
+			loser = "Player 2"
+		elif player2.flags == 8:
+			loser = "Player 1"
+		if player1.gears <= 0:
+			loser = "Player 1"
+		elif player2.gears <= 0:
+			loser = "Player 2"
+		
+		if loser is not None:
+			end_font = pygame.font.Font(None, 74)
+			end_text = end_font.render(f"Fim de jogo para o(a) {loser}", True, BLACK_COLOR)
+			title_rect = end_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 100))
+			screen.blit(end_text, title_rect)
+
+		
 
 	pygame.display.flip()
 	clock.tick(FPS)

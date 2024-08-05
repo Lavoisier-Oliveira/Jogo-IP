@@ -35,10 +35,10 @@ PROJECTILE_COLLISION_SOUND.set_volume(0.1)
 FONT_GEAR = pygame.font.SysFont(pygame.font.get_default_font(), 35)
 FONT_48 = pygame.font.Font(None, 48)
 
-COLLECTIBLE_REMOVE_TIME = 4000
-GEAR_GEN_TIME = 5000
-AMMO_GEN_TIME = 7000
-FLAG_GEN_TIME = 10000
+COLLECTIBLE_REMOVE_TIME = 6000
+GEAR_GEN_TIME = 6000
+AMMO_GEN_TIME = 5000
+FLAG_GEN_TIME = 8000
 
 BLUE_FLAG_IMAGE = pygame.image.load(R"assets/Collectibles/bandeira_azul.png")
 BLUE_FLAG_IMAGE = pygame.transform.scale(BLUE_FLAG_IMAGE, (SCREEN_WIDTH // 37, SCREEN_HEIGHT // 12))
