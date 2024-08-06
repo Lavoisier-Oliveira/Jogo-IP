@@ -10,7 +10,7 @@ class HomeMenuScreen:
 
         # texto do botão
         self.font = pygame.font.Font(None, 36)
-        self.button_text = self.font.render("Iniciar",True, WHITE_COLOR)
+        self.button_text = self.font.render("Iniciar", True, WHITE_COLOR)
 
     def handle_event(self, event):  # detectar se clicou no botão de início
         if event.type == pygame.MOUSEBUTTONDOWN:
