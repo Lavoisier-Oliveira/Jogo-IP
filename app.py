@@ -129,12 +129,8 @@ def run():
 				loser = "Player 2"
 				
 			if loser is not None:
-				restart = game_screen.end_surface(loser, screen) 
-				if event.type == pygame.MOUSEBUTTONDOWN:
-					x, y = event.pos
-					if restart[1].collidepoint(x, y):
-						Tank.tanks = []
-						run()
+				if game_screen.end_surface(loser, screen, event):
+					run() 
 				
 		pygame.display.flip()
 		clock.tick(FPS)

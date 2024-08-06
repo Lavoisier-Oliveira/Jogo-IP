@@ -23,7 +23,7 @@ class GameScreen:
 		for player in Tank.tanks:
 			screen.blit(player.image, player.rect.topleft)  # Desenhar o tanque na nova posição
 
-	def end_surface(self, loser, screen):
+	def end_surface(self, loser, screen, event):
 		if loser is not None:
 			end_font = pygame.font.Font(None, 74)
 			end_text = end_font.render(f"Fim de jogo para o(a) {loser}", True, BLACK_COLOR)
@@ -40,4 +40,9 @@ class GameScreen:
 			button = font.render("RESTART",True, WHITE_COLOR)
 			text = button.get_rect(center=restart.center)
 			screen.blit(button, text)
-			return (True, restart)
+			if event.type == pygame.MOUSEBUTTONDOWN:
+				x, y = event.pos
+				if restart.collidepoint(x, y):
+					Tank.tanks = []
+					return True
+				
