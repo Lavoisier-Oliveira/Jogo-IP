@@ -139,7 +139,7 @@ def run():
 	sys.exit()
 
 run()
-=======
+#=======
 pygame.font.init()
 
 # PyGame Setup
