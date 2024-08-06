@@ -80,7 +80,7 @@ A divisão de trabalho foi feita utilizando o notion, no qual cada integrante po
 
 - Lavoisier - Refatoração dos códigos dos Itens Colecionáveis por meio da implementação da POO. Correção nos sons do jogo. Adição da licença MIT ao projeto. Criação da tela de escolha dos tanques. Adição dos tanques à tela do jogo, além de participação na movimentação do tanque. Adição de Imagens de fundo às telas do jogo.
 - Júlia -
-- Valter -
+- Valter - Criação da tela inicial
 - Renato -
 - Luis -
 - Renan - Realização da documentação do projeto, sons de alguns coletáveis, sons de disparo, e explosão, criação do coletável da bandeira, criação do projétil do tanque e sua animação de explosão.
