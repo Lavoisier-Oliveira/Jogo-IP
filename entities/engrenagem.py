@@ -1,4 +1,3 @@
-import pygame
 from entities.collectible import Collectible
 from parameters import *
 

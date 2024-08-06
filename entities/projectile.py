@@ -2,7 +2,6 @@ import math
 import pygame
 from entities.animations import Explosion
 from parameters import *
-from entities.tank import Tank
 
 # Função para definir o player que está realizando o disparo do projétil
 def main(player1, player2, screen, key):
