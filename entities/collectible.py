@@ -21,8 +21,8 @@ class Collectible:
 		dict_collectibles[self.name].append(self)
 
 	def create_collectible(self):
-		self.pos_x = random.randint(int(SCREEN_WIDTH * 0.2), int(SCREEN_WIDTH * 0.8))
-		self.pos_y = random.randint(int(SCREEN_HEIGHT * 0.2), int(SCREEN_HEIGHT * 0.8))
+		self.pos_x = random.randint(int(SCREEN_WIDTH*0.001), int(SCREEN_WIDTH * 0.95))
+		self.pos_y = random.randint(int(SCREEN_HEIGHT * 0.05), int(SCREEN_HEIGHT * 0.85))
 		self.rect = self.rect_self()
 
 	def show_in_screen(self, image, screen):
