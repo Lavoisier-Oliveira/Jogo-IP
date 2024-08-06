@@ -58,4 +58,4 @@ class Projectile(pygame.sprite.Sprite):
 			explosion = Explosion(self.player.rect.centerx, self.player.rect.centery)
 			explosion_sprite.add(explosion)
 			PROJECTILE_COLLISION_SOUND.play()
-			self.player.gears -= BULLET_DAMAGE
+			self.player.gears = max(0, self.player.gears - BULLET_DAMAGE)
