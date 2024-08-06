@@ -14,8 +14,8 @@ from entities.projectile import Projectile, main, instance_sprites
 pygame.font.init()
 
 # PyGame Setup
-screen = pygame.display.set_mode(SCREEN_SIZE)
-clock = pygame.time.Clock()
+screen = pygame.display.set_mode(SCREEN_SIZE) # Cria a janela do jogo com o tamanho da tela do monitor
+clock = pygame.time.Clock() # Cria um objeto para ajudar a controlar o tempo
 
 home_menu_screen = HomeMenuScreen()
 tank_selection_screen = TankSelectionScreen()
