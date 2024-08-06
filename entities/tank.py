@@ -1,5 +1,6 @@
 import pygame
 import math
+from parameters import *
 
 pygame.init()
 monitor = pygame.display.Info()
@@ -12,18 +13,21 @@ class Tank:
 
 	def __init__(self, color: str, model: int, initial_pos: list, size: int, speed: int, keys: tuple):
 		self.keys = keys  # pass pygame.K_x in the order: left, up, down, right
-		self.image = pygame.image.load(f"./assets/Hulls_Color_{color}/Hull_0{model}.png")  # Carrega a imagem do tanque
 		self.size = size
-		self.image = pygame.transform.scale(self.image, (self.size,
-														 self.size)).convert_alpha()  # Redimensiona a imagem do tanque e tranforma num formato mais versatil para o pygame operar
+		self.image = pygame.image.load(f"./assets/Hulls_Color_{color}/Hull_0{model}.png")  # Carrega a imagem do tanque
+		self.image = pygame.transform.scale(self.image, (self.size, self.size)).convert_alpha()  # Redimensiona a imagem do tanque e tranforma num formato mais versatil para o pygame operar
 		self.original_image = self.image.copy()  # Guarda a imagem original para futuras rotações
+		self.cannon_image = pygame.image.load(f"./assets/Weapon_Color_{color}_256X256/Gun_0{model}.png")
+		self.cannon_image = pygame.transform.scale(self.cannon_image, (self.size, self.size)).convert_alpha()
+		self.original_cannon_image = self.cannon_image.copy()
+		
 		self.rect = self.image.get_rect(center=initial_pos)
 		self.speed = speed  # pixels percorridos por tick
 		self.mask = pygame.mask.from_surface(self.image) # Criando uma nova superfície a partir da imagem do tanque, que realiza a dimensão pixel a pixel
-		self.gears = 20
-		self.ammo = 20
+		self.gears = INITIAL_QTD_GEARS
+		self.ammo = INITIAL_QTD_AMMO
 		self.flags = 0
-		self.is_live = True
+		self.is_alive = True
 
 		Tank.tanks.append(self)
 
@@ -78,6 +82,7 @@ class Tank:
 		self.angle = math.degrees(math.atan2(-self.vy, self.vx))-90
 		# Preserve the center position while rotating
 		self.image = pygame.transform.rotate(self.original_image, self.angle)
+		self.cannon_image = pygame.transform.rotate(self.original_cannon_image, self.angle)
 		self.rect = self.image.get_rect(center=self.rect.center)  # Atualiza o retângulo da imagem com o centro preservado
 
 	def move(self):
@@ -113,7 +118,7 @@ class Tank:
 			self.rect.centery += self.vy
 
 	def update(self):
-		if self.is_live:
+		if self.is_alive:
 			self.read_input()
 			if self.vx != 0 or self.vy != 0:
 				self.move()

@@ -24,7 +24,6 @@ class Collectible:
 		self.pos_x = random.randint(int(SCREEN_WIDTH * 0.2), int(SCREEN_WIDTH * 0.8))
 		self.pos_y = random.randint(int(SCREEN_HEIGHT * 0.2), int(SCREEN_HEIGHT * 0.8))
 		self.rect = self.rect_self()
-		print(f'Spawn at: {pygame.time.get_ticks()} | Pos: {self.pos_x, self.pos_y}')
 
 	def show_in_screen(self, image, screen):
 		screen.blit(image, (self.pos_x, self.pos_y))
@@ -35,7 +34,6 @@ class Collectible:
 
 	def remove_from_screen(self, dict_collectibles):
 		dict_collectibles[self.name].remove(self)
-		print(f'Removed {self.name}')
 
 	def rect_self(self):
 		return pygame.Rect(self.pos_x, self.pos_y, self.size_w, self.size_h)

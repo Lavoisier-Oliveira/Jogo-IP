@@ -4,6 +4,8 @@ pygame.init()
 FPS = 60
 KEYS_PLAYER_1 = (pygame.K_a, pygame.K_w, pygame.K_s, pygame.K_d)
 KEYS_PLAYER_2 = (pygame.K_LEFT, pygame.K_UP, pygame.K_DOWN, pygame.K_RIGHT)
+PLAYER_1_SHOT_BUTTON = pygame.K_SPACE
+PLAYER_2_SHOT_BUTTON = pygame.K_RCTRL
 
 PROJECTILE_SPRITES = pygame.sprite.Group()
 EXPLOSION_SPRITES = pygame.sprite.Group()
@@ -52,7 +54,10 @@ GEAR_GEN_TIME = 6000
 AMMO_GEN_TIME = 5000
 FLAG_GEN_TIME = 8000
 
+INITIAL_QTD_GEARS = 15
+INITIAL_QTD_AMMO = 10
+
 QTD_FLAGS_TO_WIN = 5
 
-BULLET_DAMAGE = 2
+BULLET_DAMAGE = 3
 BULLET_SPEED = 25

@@ -47,7 +47,7 @@ while game_is_running:
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT or (event.type == pygame.KEYDOWN and event.key == pygame.K_ESCAPE):
 			game_is_running = False
-		elif event.type == pygame.KEYDOWN and current_screen == game_screen and (event.key == pygame.K_SPACE or event.key == pygame.K_m):
+		elif event.type == pygame.KEYDOWN and current_screen == game_screen and (event.key == PLAYER_1_SHOT_BUTTON or event.key == PLAYER_2_SHOT_BUTTON):
 			main(player1, player2, screen, event.key) # Adicionando os projéteis
 		else:
 			current_screen.handle_event(event)
@@ -90,6 +90,7 @@ while game_is_running:
 		# Renderizar tanques
 		for player in Tank.tanks:
 			screen.blit(player.image, player.rect.topleft)
+			screen.blit(player.cannon_image, player.rect.topleft)
 
 		# Mostrar na tela a quantidade de engrenagens coletadas por jogador
 		screen.blit(FONT_GEAR.render(f"PLAYER 1 : {player1.gears}", 1, BLACK_COLOR), (50, 50))
@@ -121,10 +122,12 @@ while game_is_running:
 		elif player2.flags == QTD_FLAGS_TO_WIN:
 			loser = "Player 1"
 		if player1.gears <= 0:
+			player1.is_alive = False
 			loser = "Player 1"
 		elif player2.gears <= 0:
+			player2.is_alive = False
 			loser = "Player 2"
-		
+
 		if loser is not None:
 			end_font = pygame.font.Font(None, 74)
 			end_text = end_font.render(f"Fim de jogo para o(a) {loser}", True, BLACK_COLOR)
