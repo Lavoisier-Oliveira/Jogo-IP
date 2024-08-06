@@ -3,13 +3,12 @@ import sys
 from parameters import *
 from entities.tank import Tank
 from entities.flags import Flag
-from random import randint
 from screens.tank_selection_screen import TankSelectionScreen
 from screens.game_screen import GameScreen
 from screens.home_menu_screen import HomeMenuScreen
 from entities.engrenagem import Engrenagem
 from entities.municao import Municao
-from entities.projectile import Projectile, main, instance_sprites
+from entities.projectile import main, instance_sprites
 
 def run():
 	pygame.font.init()

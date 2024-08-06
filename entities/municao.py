@@ -1,5 +1,3 @@
-# entities/municao.py
-import pygame
 from entities.collectible import Collectible
 from parameters import *
 
