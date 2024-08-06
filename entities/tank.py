@@ -20,9 +20,10 @@ class Tank:
 		self.rect = self.image.get_rect(center=initial_pos)
 		self.speed = speed  # pixels percorridos por tick
 		self.mask = pygame.mask.from_surface(self.image) # Criando uma nova superfície a partir da imagem do tanque, que realiza a dimensão pixel a pixel
-		self.gears = 5
-		self.ammo = 5
+		self.gears = 20
+		self.ammo = 20
 		self.flags = 0
+		self.is_live = True
 
 		Tank.tanks.append(self)
 
@@ -112,7 +113,8 @@ class Tank:
 			self.rect.centery += self.vy
 
 	def update(self):
-		self.read_input()
-		if self.vx != 0 or self.vy != 0:
-			self.move()
-			self.angle_image()
+		if self.is_live:
+			self.read_input()
+			if self.vx != 0 or self.vy != 0:
+				self.move()
+				self.angle_image()

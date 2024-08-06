@@ -114,12 +114,11 @@ while game_is_running:
 		# Gerando as animações de todos os projéteis e explosões
 		instance_sprites(screen)
 
-
 		# Checar se algum player morreu ou pegou 8 bandeiras
 		loser = None
-		if player1.flags == 8:
+		if player1.flags == QTD_FLAGS_TO_WIN:
 			loser = "Player 2"
-		elif player2.flags == 8:
+		elif player2.flags == QTD_FLAGS_TO_WIN:
 			loser = "Player 1"
 		if player1.gears <= 0:
 			loser = "Player 1"
@@ -131,8 +130,6 @@ while game_is_running:
 			end_text = end_font.render(f"Fim de jogo para o(a) {loser}", True, BLACK_COLOR)
 			title_rect = end_text.get_rect(center=(SCREEN_WIDTH // 2, SCREEN_HEIGHT // 2 - 100))
 			screen.blit(end_text, title_rect)
-
-		
 
 	pygame.display.flip()
 	clock.tick(FPS)

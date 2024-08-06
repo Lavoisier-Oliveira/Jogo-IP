@@ -33,7 +33,7 @@ class Projectile(pygame.sprite.Sprite):
 		self.rect = self.image.get_rect()
 		self.rect.center = (x, y)
 		self.angle = math.radians(angle)
-		self.speed = 10
+		self.speed = BULLET_SPEED
 		self.speed_x = math.cos(self.angle) * self.speed
 		self.speed_y = math.sin(self.angle) * self.speed
 		self.player = player
@@ -57,4 +57,4 @@ class Projectile(pygame.sprite.Sprite):
 			explosion = Explosion(self.player.rect.centerx, self.player.rect.centery)
 			explosion_sprite.add(explosion)
 			PROJECTILE_COLLISION_SOUND.play()
-			self.player.gears -= 2
+			self.player.gears -= BULLET_DAMAGE
