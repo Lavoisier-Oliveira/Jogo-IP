@@ -18,7 +18,7 @@ SCREEN_WIDTH = pygame.display.Info().current_w
 SCREEN_HEIGHT = pygame.display.Info().current_h
 SCREEN_SIZE = (SCREEN_WIDTH, SCREEN_HEIGHT)
 
-pygame.mixer.music.set_volume(0.4)
+pygame.mixer.music.set_volume(1)
 BACKGROUND_MUSIC = pygame.mixer.music.load(R"audio/background_music.mp3")
 pygame.mixer.music.play(-1)
 

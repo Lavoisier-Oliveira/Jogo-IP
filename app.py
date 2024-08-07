@@ -61,10 +61,10 @@ def run():
 			# Inicializa os tanques
 			player1 = Tank(tank_selection_screen.tank_player1[0],
 						tank_selection_screen.tank_player1[1],
-						[100, 100], 60, 10, KEYS_PLAYER_1)
+						[SCREEN_WIDTH//7, SCREEN_HEIGHT//2], 60, 10, KEYS_PLAYER_1)
 			player2 = Tank(tank_selection_screen.tank_player2[0],
 						tank_selection_screen.tank_player2[1],
-						[400, 400], 60, 10, KEYS_PLAYER_2)
+						[SCREEN_WIDTH//1.2, SCREEN_HEIGHT//2], 60, 10, KEYS_PLAYER_2)
 
 			current_screen = game_screen
 			tank_selection_screen.start_game = False
@@ -122,7 +122,7 @@ def run():
 			elif player2.flags == QTD_FLAGS_TO_WIN:
 				loser = "Player 1"
 				player2.is_alive = False
-			if player1.gears <= 0:
+			elif player1.gears <= 0:
 				player1.is_alive = False
 				loser = "Player 1"
 			elif player2.gears <= 0:
