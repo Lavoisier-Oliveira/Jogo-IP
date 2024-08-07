@@ -14,8 +14,8 @@ class Engrenagem(Collectible):
 		collision = self.check_collision(player1, player2)
 		if collision is not False:
 			if collision == 1:
-				player1.gears += 1
+				player1.gears += GEAR_REGENERATION
 			else:
-				player2.gears += 1
+				player2.gears += GEAR_REGENERATION
 			GEAR_COLLISION_SOUND.play()
 			self.remove_from_screen(dict_collectibles)

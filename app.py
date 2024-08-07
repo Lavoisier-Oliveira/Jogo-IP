@@ -31,9 +31,9 @@ def run():
 		'bandeira': 0
 	}
 	collectible_generation_time = { 
-		'engrenagem': GEAR_GEN_TIME,
-		'municao': AMMO_GEN_TIME,
-		'bandeira': FLAG_GEN_TIME
+		'engrenagem': GEAR_SPAWN_TIME,
+		'municao': AMMO_SPAWN_TIME,
+		'bandeira': FLAG_SPAWN_TIME
 	}
 
 	current_screen = home_menu_screen

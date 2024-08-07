@@ -11,7 +11,7 @@ class Municao(Collectible):
 		self.check_collectible_timeout(game_time, dict_collectibles)
 
 		collision = self.check_collision(player1, player2)
-		if collision is not False:
+		if collision:
 			if collision == 1:
 				player1.ammo += 3
 			else:
