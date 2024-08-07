@@ -1,4 +1,4 @@
-from Entities.collectible import Collectible
+from entities.collectible import Collectible
 from parameters import *
 
 class Municao(Collectible):

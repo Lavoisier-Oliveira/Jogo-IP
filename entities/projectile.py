@@ -1,6 +1,6 @@
 import math
 import pygame
-from Entities.animations import Explosion
+from entities.animations import Explosion
 from parameters import *
 
 # Função para definir o player que está realizando o disparo do projétil

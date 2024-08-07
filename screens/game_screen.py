@@ -1,6 +1,6 @@
 import pygame
 from parameters import *
-from Entities.tank import Tank
+from entities.tank import Tank
 
 class GameScreen:
 	def __init__(self):
