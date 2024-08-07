@@ -27,7 +27,7 @@ class Projectile(pygame.sprite.Sprite):
 	def __init__(self, x, y, angle, player, display):
 		super(Projectile, self).__init__()
 		self.size = [SCREEN_WIDTH//23, SCREEN_HEIGHT//10]
-		self.image = pygame.image.load(R"Assets/Collectibles/Medium_Shell.png")
+		self.image = pygame.image.load(R"assets/collectibles/Medium_Shell.png")
 		self.image = pygame.transform.scale(self.image, (self.size[0], self.size[1]))
 		self.image = pygame.transform.rotate(self.image, -90-angle)
 		self.rect = self.image.get_rect()

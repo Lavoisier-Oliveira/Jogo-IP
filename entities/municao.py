@@ -3,7 +3,7 @@ from parameters import *
 
 class Municao(Collectible):
 	def __init__(self):
-		super().__init__('municao', "./Assets/Collectibles/Medium_Shell.png", 25, 10)
+		super().__init__('municao', "./assets/collectibles/Medium_Shell.png", 25, 10)
 		self.create_collectible()
 
 	def main(self, screen, player1, player2, game_time, dict_collectibles):

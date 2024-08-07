@@ -7,7 +7,7 @@ class Explosion(pygame.sprite.Sprite):
 		self.frames_imgs = []
 		# Adicionando a lista de frames possíveis todas as imagens de explosão
 		for i in range(8):
-			explosion_frame = pygame.image.load(f'Assets/Explosions/Explosion_{i+1}.png')
+			explosion_frame = pygame.image.load(f'assets/explosions/Explosion_{i+1}.png')
 			w, h = explosion_frame.get_size()
 			width = int(w * 0.5)
 			height = int(h * 0.5)

@@ -14,10 +14,10 @@ class Tank:
 	def __init__(self, color: str, model: int, initial_pos: list, size: int, speed: int, keys: tuple):
 		self.keys = keys  # pass pygame.K_x in the order: left, up, down, right
 		self.size = size
-		self.image = pygame.image.load(f"./Assets/Tanks/Hulls_Color_{color}/Hull_0{model}.png")  # Carrega a imagem do tanque
+		self.image = pygame.image.load(f"./assets/tanks/Hulls_Color_{color}/Hull_0{model}.png")  # Carrega a imagem do tanque
 		self.image = pygame.transform.scale(self.image, (self.size, self.size)).convert_alpha()  # Redimensiona a imagem do tanque e tranforma num formato mais versatil para o pygame operar
 		self.original_image = self.image.copy()  # Guarda a imagem original para futuras rotações
-		self.cannon_image = pygame.image.load(f"./Assets/Weapons/Weapon_Color_{color}/Gun_0{model}.png")
+		self.cannon_image = pygame.image.load(f"./assets/weapons/weapon_Color_{color}/Gun_0{model}.png")
 		self.cannon_image = pygame.transform.scale(self.cannon_image, (self.size, self.size)).convert_alpha()
 		self.original_cannon_image = self.cannon_image.copy()
 		

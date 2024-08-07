@@ -1,14 +1,14 @@
 import pygame
 import sys
 from parameters import *
-from Entities.tank import Tank
-from Entities.flags import Flag
-from Screens.tank_selection_screen import TankSelectionScreen
-from Screens.game_screen import GameScreen
-from Screens.home_menu_screen import HomeMenuScreen
-from Entities.engrenagem import Engrenagem
-from Entities.municao import Municao
-from Entities.projectile import main, instance_sprites
+from entities.tank import Tank
+from entities.flags import Flag
+from screens.tank_selection_screen import TankSelectionScreen
+from screens.game_screen import GameScreen
+from screens.home_menu_screen import HomeMenuScreen
+from entities.engrenagem import Engrenagem
+from entities.municao import Municao
+from entities.projectile import main, instance_sprites
 
 def run():
 	pygame.font.init()

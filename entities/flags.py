@@ -4,8 +4,8 @@ from parameters import *
 
 class Flag(Collectible):
 	def __init__(self):
-		super().__init__('bandeira', "./Assets/Collectibles/bandeira_vermelha.png", 37, 12)
-		self.blue_flag_image = pygame.image.load("./Assets/Collectibles/bandeira_azul.png")
+		super().__init__('bandeira', "./assets/collectibles/bandeira_vermelha.png", 37, 12)
+		self.blue_flag_image = pygame.image.load("./assets/collectibles/bandeira_azul.png")
 		self.blue_flag_image = pygame.transform.scale(self.blue_flag_image, self.size)
 		self.create_collectible()
 
