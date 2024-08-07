@@ -118,8 +118,10 @@ def run():
 			loser = None
 			if player1.flags == QTD_FLAGS_TO_WIN:
 				loser = "Player 2"
+				player2.is_alive = False
 			elif player2.flags == QTD_FLAGS_TO_WIN:
 				loser = "Player 1"
+				player2.is_alive = False
 			if player1.gears <= 0:
 				player1.is_alive = False
 				loser = "Player 1"
