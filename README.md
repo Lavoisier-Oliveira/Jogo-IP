@@ -6,7 +6,7 @@ A ideia principal do projeto é ser um jogo de tanques player versus player com 
 
 ### Integrantes:
 
-Julia Sovka Souza  
+Julia Zovka Souza
 Lavoisier Oliveira Cândido  
 Luis Eduardo Ribeiro Freitas  
 Renan Santana Costa  
