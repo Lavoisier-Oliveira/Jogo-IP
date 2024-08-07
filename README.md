@@ -98,10 +98,10 @@ python app.py
 A divisão de trabalho foi feita utilizando o notion, no qual cada integrante podia observar as atividades e seu status para escolher qual tarefa escolher.
 
 - Lavoisier - Refatoração dos códigos dos Itens Colecionáveis por meio da implementação da POO. Correção nos sons do jogo. Adição da licença MIT ao projeto. Criação da tela de escolha dos tanques. Adição dos tanques à tela do jogo, além de participação na movimentação do tanque. Adição de Imagens de fundo às telas do jogo.
-- Júlia - Criação do coletável da engrenagem,música de background e som de colisão da engrenagem com o tanque 
+- Júlia - Criação do coletável da engrenagem,música de background e som de colisão da engrenagem com o tanque. 
 - Valter - Criação da tela inicial
 - Renato -
-- Luis -
+- Luis - Auxílio no processo de criação do colecionável da munição e do projétil do tanque
 - Renan - Realização da documentação do projeto, sons de alguns coletáveis, sons de disparo, e explosão, criação do coletável da bandeira, criação do projétil do tanque e sua animação de explosão.
 
 ## Conceitos utilizados
