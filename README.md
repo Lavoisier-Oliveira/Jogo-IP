@@ -46,10 +46,10 @@ python app.py
 - [app.py](http://app.py) - Arquivo principal do projeto, é nesse arquivo em que são reunidas as informações de todo o projeto para a execução do código. Este arquivo reúne todos os outros blocos de código e então executa o script para o funcionamento do jogo.
 - requirements.txt - Esse arquivo possui as dependências a serem instaladas no ambiente virtual, no nosso caso apenas realizamos a instalação da biblioteca do PyGame na versão 2.6.0.
 - [parameters.py](http://parameter.py) - Neste arquivo são guardadas todas as constantes que podem ser acessadas em todos os arquivos, como por exemplo a variável que guarda o tamanho da tela.
-- screens - Pasta que possui as telas do jogo.
+- Screens - Pasta que possui as telas do jogo.
     - tank_selection_screen.py - Tela inicial na qual ambos os jogadores devem selecionar seus tanques para iniciar o jogo.
     - [gamescreen.py](http://gamescreen.py) - Arquivo que ao ser executado carrega a página principal do jogo.
-- entities - Pasta que contém todas as entidades principais do jogo que foram estruturadas utilizando os conceitos de Programação Orientada a Objetos (POO), cada entidade possui suas funções como locomoção, geração de imagens, criação de animação, renderização na tela, e entre outros.
+- Entities - Pasta que contém todas as entidades principais do jogo que foram estruturadas utilizando os conceitos de Programação Orientada a Objetos (POO), cada entidade possui suas funções como locomoção, geração de imagens, criação de animação, renderização na tela, e entre outros.
     - [tank.py](http://tank.py) - Este arquivo possui a principal entidade do jogo, esta classe recebe inputs do teclado no (W, A, S, D) e (↑ ↓ ← → ) para a realização do movimento de cada jogador.
     - [collectible.py](http://collectible.py) - Esse é o arquivo que possui todas as funções principais na geração dos coletáveis, como criação do coletável no mapa, renderização do coletável no mapa, remoção dos coletáveis, e a checagem de colisão entre o player e o coletável. Esta é a classe que vai ser herdada por todos os outros coletáveis.
     - [flag.py](http://flag.py) - Arquivo para a criação do coletável de bandeira, que herda a classe Collectible.
@@ -117,7 +117,7 @@ Outro fator importante foram os conceitos de programação orientada a objetos (
     ```python
     # Adicionando a lista de frames possíveis todas as imagens de explosão
     		for i in range(8):
-    			explosion_frame = pygame.image.load(f'assets/Explosions/Explosion_{i+1}.png')
+    			explosion_frame = pygame.image.load(f'Assets/Explosions/Explosion_{i+1}.png')
     			w, h = explosion_frame.get_size()
     			width = int(w * 0.5)
     			height = int(h * 0.5)
@@ -143,7 +143,7 @@ Outro fator importante foram os conceitos de programação orientada a objetos (
     
     	def __init__(self, color: str, model: int, initial_pos: list, size: int, speed: int, keys: tuple):
     		self.keys = keys
-    		self.image = pygame.image.load(f"./assets/Hulls_Color_{color}/Hull_0{model}.png")
+    		self.image = pygame.image.load(f"./Assets/Tanks/Hulls_Color_{color}/Hull_0{model}.png")
     		self.size = size
     		self.image = pygame.transform.scale(self.image, (self.size,
     														 self.size)).convert_alpha()  

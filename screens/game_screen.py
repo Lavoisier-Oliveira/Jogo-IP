@@ -1,10 +1,10 @@
 import pygame
 from parameters import *
-from entities.tank import Tank
+from Entities.tank import Tank
 
 class GameScreen:
 	def __init__(self):
-		self.background_image = pygame.image.load(R'assets\backgrounds\back2.jpg')  # Load the background image
+		self.background_image = pygame.image.load(R'assets\Backgrounds\game_screen_background.jpg')  # Load the background image
 		self.background_image = pygame.transform.scale(self.background_image, SCREEN_SIZE)  # Resize the background image to fit the screen
 
 	def handle_event(self, event):

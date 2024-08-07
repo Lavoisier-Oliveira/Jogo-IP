@@ -5,7 +5,7 @@ class HomeMenuScreen:
     def __init__(self):
         self.start_game = False
         self.start_button = pygame.Rect((SCREEN_WIDTH // 2) - 100, SCREEN_HEIGHT // 2, 200,50) # configurando o botão de início
-        self.background_image = pygame.image.load("assets/backgrounds/view-armed-tank-used-combat-war-time.jpg")
+        self.background_image = pygame.image.load("Assets/Backgrounds/home_menu_screen_background.jpg")
         self.background_image = pygame.transform.scale(self.background_image, SCREEN_SIZE)
 
         # texto do botão

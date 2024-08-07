@@ -10,10 +10,10 @@ class TankSelectionScreen:
 		self.choice_p1, self.choice_p2 = True, False # Escolha do jogador 1 e jogador 2
 
 		self.font = pygame.font.Font(None, 50)
-		self.tank_image = pygame.image.load(f"assets/Hulls_Color_{self.color}/Hull_0{self.model}.png")
-		self.cannon_image =  pygame.image.load(f"./assets/Weapon_Color_{self.color}_256X256/Gun_0{self.model}.png")
+		self.tank_image = pygame.image.load(f"Assets/Tanks/Hulls_Color_{self.color}/Hull_0{self.model}.png")
+		self.cannon_image =  pygame.image.load(f"./Assets/Weapons/Weapon_Color_{self.color}/Gun_0{self.model}.png")
 
-		self.background_image = pygame.image.load("assets/backgrounds/background_select_screen - Copy.jpg")
+		self.background_image = pygame.image.load("Assets/Backgrounds/tank_selection_screen_background.jpg")
 		self.background_image = pygame.transform.scale(self.background_image, SCREEN_SIZE)
 
 		# Retângulo que contém a imagem do tanque
@@ -36,12 +36,12 @@ class TankSelectionScreen:
 			# Verifica se o clique foi dentro do retângulo do botão do modelo do tanque
 			if self.left_button_rect.collidepoint(event.pos):
 				self.model = 8 if self.model == 1 else self.model - 1 # Mantém as escolhas no conjunto de 1 a 8
-				self.tank_image = pygame.image.load(f"assets/Hulls_Color_{self.color}/Hull_0{self.model}.png")
-				self.cannon_image =  pygame.image.load(f"./assets/Weapon_Color_{self.color}_256X256/Gun_0{self.model}.png")
+				self.tank_image = pygame.image.load(f"Assets/Tanks/Hulls_Color_{self.color}/Hull_0{self.model}.png")
+				self.cannon_image =  pygame.image.load(f"./Assets/Weapons/Weapon_Color_{self.color}/Gun_0{self.model}.png")
 			elif self.right_button_rect.collidepoint(event.pos):
 				self.model = 1 if self.model == 8 else self.model + 1 # Mantém as escolhas no conjunto de 1 a 8
-				self.tank_image = pygame.image.load(f"assets/Hulls_Color_{self.color}/Hull_0{self.model}.png")
-				self.cannon_image =  pygame.image.load(f"./assets/Weapon_Color_{self.color}_256X256/Gun_0{self.model}.png")
+				self.tank_image = pygame.image.load(f"Assets/Tanks/Hulls_Color_{self.color}/Hull_0{self.model}.png")
+				self.cannon_image =  pygame.image.load(f"./Assets/Weapons/Weapon_Color_{self.color}/Gun_0{self.model}.png")
 			elif self.select_tank_button.collidepoint(event.pos):
 				if self.choice_p2:
 					self.start_game = True
@@ -56,12 +56,12 @@ class TankSelectionScreen:
 			# Verifica se o clique foi dentro do retângulo do botão da cor do tanque
 			if self.left_color_rect.collidepoint(event.pos):
 				self.color = self.colors[(self.colors.index(self.color) - 1) % len(self.colors)] # Mantém as escolhas no conjunto de A a D
-				self.tank_image = pygame.image.load(f"assets/Hulls_Color_{self.color}/Hull_0{self.model}.png")
-				self.cannon_image =  pygame.image.load(f"./assets/Weapon_Color_{self.color}_256X256/Gun_0{self.model}.png")
+				self.tank_image = pygame.image.load(f"Assets/Tanks/Hulls_Color_{self.color}/Hull_0{self.model}.png")
+				self.cannon_image =  pygame.image.load(f"./Assets/Weapons/Weapon_Color_{self.color}/Gun_0{self.model}.png")
 			elif self.right_color_left.collidepoint(event.pos):
 				self.color = self.colors[(self.colors.index(self.color) + 1) % len(self.colors)] # Mantém as escolhas no conjunto de A a D
-				self.tank_image = pygame.image.load(f"assets/Hulls_Color_{self.color}/Hull_0{self.model}.png")
-				self.cannon_image =  pygame.image.load(f"./assets/Weapon_Color_{self.color}_256X256/Gun_0{self.model}.png")
+				self.tank_image = pygame.image.load(f"Assets/Tanks/Hulls_Color_{self.color}/Hull_0{self.model}.png")
+				self.cannon_image =  pygame.image.load(f"./Assets/Weapons/Weapon_Color_{self.color}/Gun_0{self.model}.png")
 
 
 	def draw(self, screen):

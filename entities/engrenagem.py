@@ -1,9 +1,9 @@
-from entities.collectible import Collectible
+from Entities.collectible import Collectible
 from parameters import *
 
 class Engrenagem(Collectible):
 	def __init__(self):
-		super().__init__('engrenagem', "./assets/Collectibles/engrenagem.png", 35, 20)
+		super().__init__('engrenagem', "./Assets/Collectibles/engrenagem.png", 35, 20)
 		self.create_collectible()
 
 
