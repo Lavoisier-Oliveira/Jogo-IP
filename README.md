@@ -101,7 +101,7 @@ A divisão de trabalho foi feita utilizando o notion, no qual cada integrante po
 - Júlia - Criação do coletável da engrenagem,música de background e som de colisão da engrenagem com o tanque. 
 - Valter - Criação da tela inicial
 - Renato -
-- Luis - auxílio no processo de criação do colecionável da munição e do projétil do tanque
+- Luis - Auxílio no processo de criação do colecionável da munição e do projétil do tanque
 - Renan - Realização da documentação do projeto, sons de alguns coletáveis, sons de disparo, e explosão, criação do coletável da bandeira, criação do projétil do tanque e sua animação de explosão.
 
 ## Conceitos utilizados
