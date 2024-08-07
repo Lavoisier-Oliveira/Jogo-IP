@@ -1,5 +1,3 @@
-# Documentação
-
 # Projeto de Introdução à Programação: CInflito de Tanques
 
 Projeto desenvolvido durante a disciplina de Introdução à Programação do Centro de Informática da Universidade Federal de Pernambuco. O projeto consiste na criação de um jogo 2D utilizando a linguagem de programação Python e a biblioteca PyGame como base do projeto.
@@ -43,29 +41,50 @@ python app.py
 
 ## Arquitetura do Projeto
 
-- [app.py](http://app.py) - Arquivo principal do projeto, é nesse arquivo em que são reunidas as informações de todo o projeto para a execução do código. Este arquivo reúne todos os outros blocos de código e então executa o script para o funcionamento do jogo.
-- requirements.txt - Esse arquivo possui as dependências a serem instaladas no ambiente virtual, no nosso caso apenas realizamos a instalação da biblioteca do PyGame na versão 2.6.0.
-- [parameters.py](http://parameter.py) - Neste arquivo são guardadas todas as constantes que podem ser acessadas em todos os arquivos, como por exemplo a variável que guarda o tamanho da tela.
-- Screens - Pasta que possui as telas do jogo.
-    - tank_selection_screen.py - Tela inicial na qual ambos os jogadores devem selecionar seus tanques para iniciar o jogo.
-    - [gamescreen.py](http://gamescreen.py) - Arquivo que ao ser executado carrega a página principal do jogo.
-- Entities - Pasta que contém todas as entidades principais do jogo que foram estruturadas utilizando os conceitos de Programação Orientada a Objetos (POO), cada entidade possui suas funções como locomoção, geração de imagens, criação de animação, renderização na tela, e entre outros.
-    - [tank.py](http://tank.py) - Este arquivo possui a principal entidade do jogo, esta classe recebe inputs do teclado no (W, A, S, D) e (↑ ↓ ← → ) para a realização do movimento de cada jogador.
-    - [collectible.py](http://collectible.py) - Esse é o arquivo que possui todas as funções principais na geração dos coletáveis, como criação do coletável no mapa, renderização do coletável no mapa, remoção dos coletáveis, e a checagem de colisão entre o player e o coletável. Esta é a classe que vai ser herdada por todos os outros coletáveis.
-    - [flag.py](http://flag.py) - Arquivo para a criação do coletável de bandeira, que herda a classe Collectible.
-    - [municao.py](http://municao.py) - Arquivo para a criação do coletável de munição do tanque, que herda a classe Collectible.
-    - [engrenagem.py](http://engrenagem.py) - Arquivo para a criação do coletável de engrenagem (vida do tanque), que herda a classe Collectible.
-    - [projectile.py](http://projectile.py) - O arquivo [projectile.py](http://projectile.py/) possui a classe Projectile que deve guardar todos os sprites de projéteis gerados ao pressionar as teclas de espaço, ou “m”. Essa classe possui alguns dos atributos da classe tanque, para então podermos checar a colisão entre o projétil e o tanque inimigo, e realizar a checagem do ângulo no qual o projétil deve ser lançado. A classe possui duas funções principais, a função para a checagem de colisão, que instancia a classe Explosions(Classe do arquivo [animations.py](http://animations.py/)) para guardar os sprites e assim criar a animação de explosão. Outra função, é a função de update que sempre renderiza o projétil na tela. O projétil some quando atinge um tanque, ou é lançado para fora do mapa.
-    - [animations.py](http://animations.py) - Este arquivo guarda todas as animações principais do projeto, desde as animações de explosões, movimento, e entre outros. Para a geração das animações utilizamos uma sequência de imagens carregadas ao instanciar alguma das classes, e guardando essa sequência de imagens, ao passar dos frames alteramos as imagens renderizadas com a lista de imagens criada anteriormente, sempre desenhando a nova imagem de animação na tela.
+- [app.py](https://github.com/Lavoisier-Oliveira/Jogo-IP/blob/main/app.py) - Arquivo principal do projeto, é nesse arquivo em que são reunidas as informações de todo o projeto para a execução do código. Este arquivo reúne todos os outros blocos de código e então executa o script para o funcionamento do jogo.
+- [requirements.txt](https://github.com/Lavoisier-Oliveira/Jogo-IP/blob/main/requirements.txt) - Esse arquivo possui as dependências a serem instaladas no ambiente virtual, no nosso caso apenas realizamos a instalação da biblioteca do PyGame na versão 2.6.0.
+- [parameters.py](https://github.com/Lavoisier-Oliveira/Jogo-IP/blob/main/parameters.py) - Neste arquivo são guardadas todas as constantes que podem ser acessadas em todos os arquivos, como por exemplo a variável que guarda o tamanho da tela.
+- screens - Pasta que possui as telas do jogo.
+    - [home_menu_screen.py](https://github.com/Lavoisier-Oliveira/Jogo-IP/blob/main/screens/home_menu_screen.py) - Tela de menu inicial para começar o jogo.
+    - [tank_selection_screen.py](https://github.com/Lavoisier-Oliveira/Jogo-IP/blob/main/screens/tank_selection_screen.py) - Tela inicial na qual ambos os jogadores devem selecionar seus tanques para iniciar o jogo.
+    - [gamescreen.py](https://github.com/Lavoisier-Oliveira/Jogo-IP/blob/main/screens/game_screen.py) - Arquivo que ao ser executado carrega a página principal do jogo.
+- entities - Pasta que contém todas as entidades principais do jogo que foram estruturadas utilizando os conceitos de Programação Orientada a Objetos (POO), cada entidade possui suas funções como locomoção, geração de imagens, criação de animação, renderização na tela, e entre outros.
+    - [tank.py](https://github.com/Lavoisier-Oliveira/Jogo-IP/blob/main/entities/tank.py) - Este arquivo possui a principal entidade do jogo, esta classe recebe inputs do teclado no (W, A, S, D) e (↑ ↓ ← → ) para a realização do movimento de cada jogador.
+    - [collectible.py](https://github.com/Lavoisier-Oliveira/Jogo-IP/blob/main/entities/collectible.py) - Esse é o arquivo que possui todas as funções principais na geração dos coletáveis, como criação do coletável no mapa, renderização do coletável no mapa, remoção dos coletáveis, e a checagem de colisão entre o player e o coletável. Esta é a classe que vai ser herdada por todos os outros coletáveis.
+    - [flag.py](https://github.com/Lavoisier-Oliveira/Jogo-IP/blob/main/entities/flags.py) - Arquivo para a criação do coletável de bandeira, que herda a classe Collectible.
+    - [municao.py](https://github.com/Lavoisier-Oliveira/Jogo-IP/blob/main/entities/municao.py) - Arquivo para a criação do coletável de munição do tanque, que herda a classe Collectible.
+    - [engrenagem.py](https://github.com/Lavoisier-Oliveira/Jogo-IP/blob/main/entities/engrenagem.py) - Arquivo para a criação do coletável de engrenagem (vida do tanque), que herda a classe Collectible.
+    - [projectile.py](https://github.com/Lavoisier-Oliveira/Jogo-IP/blob/main/entities/projectile.py) - O arquivo [projectile.py](http://projectile.py/) possui a classe Projectile que deve guardar todos os sprites de projéteis gerados ao pressionar as teclas de espaço, ou “m”. Essa classe possui alguns dos atributos da classe tanque, para então podermos checar a colisão entre o projétil e o tanque inimigo, e realizar a checagem do ângulo no qual o projétil deve ser lançado. A classe possui duas funções principais, a função para a checagem de colisão, que instancia a classe Explosions(Classe do arquivo [animations.py](https://github.com/Lavoisier-Oliveira/Jogo-IP/blob/main/entities/animations.py)) para guardar os sprites e assim criar a animação de explosão. Outra função, é a função de update que sempre renderiza o projétil na tela. O projétil some quando atinge um tanque, ou é lançado para fora do mapa.
+    - [animations.py](https://github.com/Lavoisier-Oliveira/Jogo-IP/blob/main/entities/animations.py) - Este arquivo guarda todas as animações principais do projeto, desde as animações de explosões, movimento, e entre outros. Para a geração das animações utilizamos uma sequência de imagens carregadas ao instanciar alguma das classes, e guardando essa sequência de imagens, ao passar dos frames alteramos as imagens renderizadas com a lista de imagens criada anteriormente, sempre desenhando a nova imagem de animação na tela.
 - assets - Pasta que contém todos os arquivos de imagem utilizados no desenvolvimento do jogo. Essa pasta possui todas as sprites de tanques, imagens de explosão, imagens dos objetos coletáveis, projéteis e entre outros.
 - audio - Pasta que contém os arquivos de áudio utilizados para o desenvolvimento do jogo. Este arquivo possui o som de background, e os sons da coleta de itens.
     
     ### Flowchart da Arquitetura do projeto -
-    
-    ![Untitled](Documentac%CC%A7a%CC%83o%20d75ff2cd79fa4c1aac16054f3f37add5/Untitled.png)
-    
+
+    <p align = "center">
+      <img width = 936 height = 724 src="https://github.com/Lavoisier-Oliveira/Jogo-IP/blob/main/assets/capturas/flow_chart.png">
+    </p>
 
 ## Capturas de Tela
+
+<p align = "center">
+  <img width = 936 height = 724 src="https://github.com/Lavoisier-Oliveira/Jogo-IP/blob/main/assets/capturas/selection_1.jpg">
+</p>
+<p align = "center">
+  <img width = 936 height = 724 src="https://github.com/Lavoisier-Oliveira/Jogo-IP/blob/main/assets/capturas/selection_2.jpg">
+</p>
+<p align = "center">
+  <img width = 936 height = 724 src="https://github.com/Lavoisier-Oliveira/Jogo-IP/blob/main/assets/capturas/game_panel.jpg">
+</p>
+<p align = "center">
+  <img width = 936 height = 724 src="https://github.com/Lavoisier-Oliveira/Jogo-IP/blob/main/assets/capturas/collecting.jpg">
+</p>
+<p align = "center">
+  <img width = 936 height = 724 src="https://github.com/Lavoisier-Oliveira/Jogo-IP/blob/main/assets/capturas/explosion.png">
+</p>
+<p align = "center">
+  <img width = 936 height = 724 src="https://github.com/Lavoisier-Oliveira/Jogo-IP/blob/main/assets/capturas/restart_game.png">
+</p>
 
 ## Bibliotecas, Ferramentas e Frameworks utilizados
 
@@ -116,13 +135,13 @@ Outro fator importante foram os conceitos de programação orientada a objetos (
     
     ```python
     # Adicionando a lista de frames possíveis todas as imagens de explosão
-    		for i in range(8):
-    			explosion_frame = pygame.image.load(f'Assets/Explosions/Explosion_{i+1}.png')
-    			w, h = explosion_frame.get_size()
-    			width = int(w * 0.5)
-    			height = int(h * 0.5)
-    			explosion_frame = pygame.transform.scale(explosion_frame, (width, height))
-    			self.frames_imgs.append(explosion_frame)
+    for i in range(8):
+        explosion_frame = pygame.image.load(f'assets/Explosions/Explosion_{i+1}.png')
+        w, h = explosion_frame.get_size()
+        width = int(w * 0.5)
+        height = int(h * 0.5)
+        explosion_frame = pygame.transform.scale(explosion_frame, (width, height))
+        self.frames_imgs.append(explosion_frame)
     ```
     
 - Listas - Dicionário que possui listas para cada coletável, adição de tanques a uma lista de tanques, e criação do retângulo do tanque a partir de sua posição inicial.
@@ -138,40 +157,40 @@ Outro fator importante foram os conceitos de programação orientada a objetos (
     # Lista de tanques
     tanks = []
     
-    	angle = 0 
-    	vx, vy = 0, 0
-    
-    	def __init__(self, color: str, model: int, initial_pos: list, size: int, speed: int, keys: tuple):
-    		self.keys = keys
-    		self.image = pygame.image.load(f"./Assets/Tanks/Hulls_Color_{color}/Hull_0{model}.png")
-    		self.size = size
-    		self.image = pygame.transform.scale(self.image, (self.size,
-    														 self.size)).convert_alpha()  
-    		self.original_image = self.image.copy()  	
-    		self.rect = self.image.get_rect(center=initial_pos) # Gerando o retângulo do tanque utilizando a lista da posição inicial em que o tanque foi gerado
-    		self.speed = speed  
-    		self.mask = pygame.mask.from_surface(self.image) 
-    		self.gears = 5
-    		self.ammo = 5
-    		self.flags = 0
-    		
-    		# Adicionando cada tanque instanciado a lista de tanques
-    		Tank.tanks.append(self)
+    angle = 0 
+    vx, vy = 0, 0
+
+    def __init__(self, color: str, model: int, initial_pos: list, size: int, speed: int, keys: tuple):
+        self.keys = keys
+        self.image = pygame.image.load(f"./assets/Hulls_Color_{color}/Hull_0{model}.png")
+        self.size = size
+        self.image = pygame.transform.scale(self.image, (self.size,
+                                                         self.size)).convert_alpha()  
+        self.original_image = self.image.copy()  	
+        self.rect = self.image.get_rect(center=initial_pos) # Gerando o retângulo do tanque utilizando a lista da posição inicial em que o tanque foi gerado
+        self.speed = speed  
+        self.mask = pygame.mask.from_surface(self.image) 
+        self.gears = 5
+        self.ammo = 5
+        self.flags = 0
+        
+        # Adicionando cada tanque instanciado a lista de tanques
+        Tank.tanks.append(self)
     ```
     
 - Funções - Função que atualiza o frame atual da animação e retorna a nova imagem.
     
     ```python
     # Função para atualizar o frame atual e gerar a imagem do frame atual
-    	def update(self):
-    		self.frame_now += 1
-    		if self.frame_now >= 7:
-    			self.index += 1
-    			if self.index >= self.frames:
-    				self.kill()
-    			else:
-    				self.image = self.frames_imgs[self.index]
-    				self.frame_now = 0
+    def update(self):
+        self.frame_now += 1
+        if self.frame_now >= 7:
+            self.index += 1
+            if self.index >= self.frames:
+                self.kill()
+            else:
+                self.image = self.frames_imgs[self.index]
+                self.frame_now = 0
     ```
     
 - Tuplas e Dicionários - Definição das teclas de cada jogador, e guardando informações dos coletáveis.
